@@ -3,9 +3,14 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Button } from "../ui/button";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { BellIcon, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import NavContent from "./nav-content";
+import { toast } from "sonner";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import AvatarBtn from "./avatar";
+import ThemeToggleButton from "../ui/theme-toggle";
+import Logo from "./logo";
 
 type Props = {
   children: React.ReactNode;
@@ -29,20 +34,60 @@ export default function NavBar({ children }: Props) {
           )}
         >
           {/* Container */}
-          <div className="container flex h-12 items-center px-4">
+          <div className="container flex h-12 items-center px-4 gap-2">
             {/* Menu Button */}
             <Button
               variant={"ghost"}
-              className="p-1 h-auto mr-3 lg:hidden"
+              className="p-1 lg:hidden aspect-square overflow-hidden"
               onClick={toggleLeftPanel}
             >
               <PanelLeftOpen size={24} />
             </Button>
 
             {/* Logo */}
-            <div className="flex items-center mr-6">
-              <h2 className="text-xl font-bold text-primary">ApexLens</h2>
+            <div className="items-center mr-6 ml-3 hidden sm:flex">
+              <Logo />
             </div>
+
+            <div className="flex-1 flex-grow hidden sm:block"></div>
+
+            {/* Search */}
+            <div className="flex-1 flex-grow max-w-sm ">
+              <Button
+                variant="outline"
+                size="default"
+                className={`w-full overflow-hidden flex flex-row justify-between items-center gap-5
+                            cursor-pointer [color:hsl(var(--foreground)/70%)]`}
+              >
+                <Search size={16} />
+                <span>Search...</span>
+                <div className="flex-1 flex-grow"></div>
+                <span className="border px-1 bg-accent rounded-sm align-middle">
+                  <span className="text-sm">⌘</span>
+                  <span className="text-xs">K</span>
+                </span>
+              </Button>
+            </div>
+
+            {/* Notifications */}
+            <Button
+              variant="outline"
+              size="icon"
+              className="overflow-hidden aspect-square"
+              onClick={(e) => {
+                toast.info("Coming Soon!", {
+                  description: "Notifications is not available yet.",
+                });
+              }}
+            >
+              <BellIcon className={`h-[1.2em] w-[1.2em] rounded-none`} />
+            </Button>
+
+            {/* Theme Toggle */}
+            <ThemeToggleButton />
+
+            {/* Profile */}
+            <AvatarBtn />
           </div>
         </header>
 
@@ -54,7 +99,7 @@ export default function NavBar({ children }: Props) {
           {/* Left Panel */}
           <div
             className={cn(
-              "fixed lg:fixed top-[49px]", // Position
+              "fixed lg:fixed top-[49px] z-50", // Position
               "w-full h-[calc(100%-49px)]", // Container
               "lg:bg-transparent lg:backdrop-blur-none", // Background
               isLeftPanelOpen &&
@@ -80,14 +125,39 @@ export default function NavBar({ children }: Props) {
               )}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className={cn("h-full flex flex-col items-stretch")}>
+              <div
+                className={cn(
+                  "h-full flex flex-col items-stretch overflow-hidden"
+                )}
+              >
                 <div className={cn("w-full")}></div>
-                <div className={cn("w-full max-h-[calc(100%-40px)] flex-1")}>
+                <div
+                  className={cn(
+                    "w-full max-h-[calc(100%-28px)] lg:max-h-[calc(100%-40px-28px)] flex-1"
+                  )}
+                >
                   <NavContent
                     isCollapsed={!isLeftPanelOpen}
                     unCollapse={() => setIsLeftPanelOpen(true)}
                   />
                 </div>
+
+                {/* Creadits */}
+                <div
+                  style={{
+                    opacity: isLeftPanelOpen ? 1 : 0,
+                    pointerEvents: isLeftPanelOpen ? "auto" : "none",
+                    transition: "opacity 300ms ease-in-out",
+                  }}
+                  className="border-t"
+                >
+                  <h3 className="text-xs font-medium text-primary px-4 pt-2 pb-1 whitespace-nowrap">
+                    Developed & Maintained by{" "}
+                    <a href="https://arif.thedev.id">Arif Sardar</a>
+                  </h3>
+                </div>
+
+                {/* Bottom / Close Button */}
                 <div
                   className={cn(
                     "w-full border-t h-10 hidden lg:flex flex-row justify-end"

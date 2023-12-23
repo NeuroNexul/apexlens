@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="h-[1000px]">
+    <main className="p-4">
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam dolore
         nam aliquam sequi delectus reiciendis fuga praesentium aut ipsum rem

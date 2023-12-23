@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/navbar";
+import { Toaster } from "@/components/ui/sonner";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -19,8 +21,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = cookies();
+  const theme = cookieStore.get("theme");
+
   return (
-    <html lang="en" className={cn("w-full h-full relative", "dark")}>
+    <html
+      lang="en"
+      className={cn(
+        "w-full h-full relative",
+        theme?.value === "light" ? "" : "dark"
+      )}
+    >
       <body
         className={cn(
           "w-full h-full relative",
@@ -30,6 +41,13 @@ export default function RootLayout({
         )}
       >
         <NavBar>{children}</NavBar>
+
+        {/* Toasts */}
+        <Toaster
+          closeButton
+          richColors
+          theme={theme?.value === "light" ? "light" : "dark"}
+        />
       </body>
     </html>
   );
