@@ -75,6 +75,11 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        rubik_vinyl: ["var(--font-rubik-vinyl)", ...fontFamily.sans],
+        noto_serif_georgian: [
+          "var(--font-noto-serif-georgian)",
+          ...fontFamily.serif,
+        ],
       },
       height: {},
     },

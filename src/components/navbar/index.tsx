@@ -7,7 +7,6 @@ import { BellIcon, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import NavContent from "./nav-content";
 import { toast } from "sonner";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import AvatarBtn from "./avatar";
 import ThemeToggleButton from "../ui/theme-toggle";
 import Logo from "./logo";
@@ -18,6 +17,12 @@ type Props = {
 
 export default function NavBar({ children }: Props) {
   const [isLeftPanelOpen, setIsLeftPanelOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (window.innerWidth >= 1024) {
+      setIsLeftPanelOpen(true);
+    }
+  }, []);
 
   function toggleLeftPanel() {
     setIsLeftPanelOpen((prev) => !prev);
