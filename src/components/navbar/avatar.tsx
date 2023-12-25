@@ -4,6 +4,7 @@ import React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -11,10 +12,14 @@ import {
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { RefreshCw } from "lucide-react";
+import { logout } from "@/lib/appwrite-client";
+import { useAuth } from "../context/auth";
 
 type Props = {};
 
 export default function AvatarBtn({}: Props) {
+  const auth = useAuth();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,12 +30,12 @@ export default function AvatarBtn({}: Props) {
         >
           <Avatar className={`h-full w-full rounded-none`}>
             <AvatarImage
-              src={"https://github.com/shadcn.png"}
-              alt={""}
+              src={""}
+              alt={auth.account?.name}
               referrerPolicy="no-referrer"
             />
             <AvatarFallback className={`h-full w-full rounded-none`}>
-              CN
+              {auth.account?.name.split(" ").map((n) => n[0])}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -56,6 +61,15 @@ export default function AvatarBtn({}: Props) {
           My Account
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={async (e) => {
+            await logout();
+            auth.setAccount(undefined);
+          }}
+        >
+          Logout
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

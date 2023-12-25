@@ -89,7 +89,7 @@ export default function NavBar({ children }: Props) {
             </Button>
 
             {/* Theme Toggle */}
-            <ThemeToggleButton />
+            {/* <ThemeToggleButton /> */}
 
             {/* Profile */}
             <AvatarBtn />

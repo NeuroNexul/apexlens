@@ -5,8 +5,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/navbar";
 import { Toaster } from "@/components/ui/sonner";
-import Script from "next/script";
-import LoginPage from "@/components/login/page";
+import { AuthProvider } from "@/components/context/auth";
+import client, { account } from "@/lib/appwrite-server";
+import { Models } from "node-appwrite";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const rubikFont = Rubik_Vinyl({
@@ -57,7 +58,7 @@ export const viewport: Viewport = {
   themeColor: "#020817",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -65,7 +66,19 @@ export default function RootLayout({
   const cookieStore = cookies();
   const theme = cookieStore.get("theme");
 
-  const isUserLoggedIn = !false;
+  // Get the JWT token from the cookie store
+  // and set it to the client
+  // Get the current account to serve to the context
+  const token = cookieStore.get(`a_session_jwt`);
+  let currentAccount: Models.User<Models.Preferences>;
+
+  try {
+    client.setJWT(token?.value || "");
+    currentAccount = await account.get();
+  } catch (error: any) {
+    console.log(error);
+    currentAccount = {} as Models.User<Models.Preferences>;
+  }
 
   return (
     <html
@@ -85,7 +98,9 @@ export default function RootLayout({
           notoSerifGeorgianFont.variable
         )}
       >
-        {isUserLoggedIn ? <NavBar>{children}</NavBar> : <LoginPage />}
+        <AuthProvider defaultAccount={currentAccount}>
+          <NavBar>{children}</NavBar>
+        </AuthProvider>
 
         {/* Toasts */}
         <Toaster

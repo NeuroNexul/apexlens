@@ -1,9 +1,12 @@
+"use client";
+
 import { Button } from "@ui/button";
 import { Checkbox } from "@ui/checkbox";
 import { cn } from "@lib/utils";
 import { Todo } from "@/types/todos";
 import GreetImage from "@assets/greet.svg";
 import Image from "next/image";
+import { useAuth } from "@/components/context/auth";
 
 const todos: Todo[] = [
   {
@@ -30,6 +33,8 @@ const todos: Todo[] = [
 ];
 
 export default function Home() {
+  const auth = useAuth();
+
   return (
     <main className="p-4">
       <div
@@ -91,7 +96,10 @@ export default function Home() {
                   "text-6xl p-2 font-rubik_vinyl tracking-[0.2em]" // Text
                 )}
               >
-                Hi, <span className="font-bold">Arif!</span>
+                Hi,{" "}
+                <span className="font-bold">
+                  {auth.account?.name.split(" ")[0]}!
+                </span>
               </h2>
               <p className="text-lg font-medium text-muted-foreground">
                 Welcome to your most personalized productivity dashboard.
