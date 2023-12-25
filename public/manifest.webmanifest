@@ -3,19 +3,51 @@
   "name": "ApexLens • Data-Driven Visibility, Precision Control.",
   "icons": [
     {
-      "src": "/images/icons-vector.svg",
+      "src": "/logo/logo_white.svg",
       "type": "image/svg+xml",
       "sizes": "512x512"
     },
     {
-      "src": "/images/icons-192.png",
+      "src": "/logo/icon_x48.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "48x48",
+      "purpose": "any maskable"
     },
     {
-      "src": "/images/icons-512.png",
+      "src": "/logo/icon_x72.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "72x72",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/icon_x96.png",
+      "type": "image/png",
+      "sizes": "96x96",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/icon_x128.png",
+      "type": "image/png",
+      "sizes": "128x128",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/icon_x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/icon_x384.png",
+      "type": "image/png",
+      "sizes": "384x384",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo/icon_x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
   "id": "/?source=pwa",
@@ -23,39 +55,12 @@
   "background_color": "#020817",
   "orientation": "portrait-primary",
   "display": "standalone",
+  "display_override": ["window-control-overlay", "minimal-ui", "browser"],
   "scope": "/",
   "theme_color": "#020817",
-  "shortcuts": [
-    {
-      "name": "How's weather today?",
-      "short_name": "Today",
-      "description": "View weather information for today",
-      "url": "/today?source=pwa",
-      "icons": [{ "src": "/images/today.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "How's weather tomorrow?",
-      "short_name": "Tomorrow",
-      "description": "View weather information for tomorrow",
-      "url": "/tomorrow?source=pwa",
-      "icons": [{ "src": "/images/tomorrow.png", "sizes": "192x192" }]
-    }
-  ],
+  "shortcuts": [],
   "description": "Visualize trends, identify roadblocks, and chart your course to success with a single, powerful interface. ApexLens: Your panoramic view to operational excellence.n",
-  "screenshots": [
-    {
-      "src": "/images/screenshot1.png",
-      "type": "image/png",
-      "sizes": "540x720",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "/images/screenshot2.jpg",
-      "type": "image/jpg",
-      "sizes": "720x540",
-      "form_factor": "wide"
-    }
-  ],
+  "screenshots": [],
   "protocol_handlers": [
     {
       "protocol": "web+todo",

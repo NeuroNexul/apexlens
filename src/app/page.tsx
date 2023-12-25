@@ -88,7 +88,7 @@ export default function Home() {
             >
               <h2
                 className={cn(
-                  "text-6xl p-2 font-rubik_vinyl tracking-widest" // Text
+                  "text-6xl p-2 font-rubik_vinyl tracking-[0.2em]" // Text
                 )}
               >
                 Hi, <span className="font-bold">Arif!</span>
