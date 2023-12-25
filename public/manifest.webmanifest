@@ -55,7 +55,12 @@
   "background_color": "#020817",
   "orientation": "portrait-primary",
   "display": "standalone",
-  "display_override": ["window-control-overlay", "minimal-ui", "browser"],
+  "display_override": [
+    "standalone",
+    "window-control-overlay",
+    "minimal-ui",
+    "browser"
+  ],
   "scope": "/",
   "theme_color": "#020817",
   "shortcuts": [],
