@@ -75,11 +75,11 @@ export async function POST(request: NextRequest) {
     }
 
     const ssrHostname =
-      SsrHostname === "localhost" ? SsrHostname : "." + SsrHostname;
+      SsrHostname === "localhost" ? SsrHostname : "" + SsrHostname;
     const appwriteHostname =
       AppwriteHostname === "localhost"
         ? AppwriteHostname
-        : "." + AppwriteHostname;
+        : "" + AppwriteHostname;
 
     const cookiesStr = (response.headers.get("set-cookie") ?? "")
       .split(appwriteHostname)

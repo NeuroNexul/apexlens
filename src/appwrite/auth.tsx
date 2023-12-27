@@ -5,6 +5,7 @@ import React from "react";
 import LoginPage from "../components/login/page";
 import { AppWriteService } from "./client";
 import { getCookie } from "@/lib/cookie";
+import { toast } from "sonner";
 
 interface AuthData {
   account?: Models.User<Models.Preferences> | null;
@@ -40,9 +41,13 @@ export const AuthProvider = ({
       })
     );
 
-    AppWriteService.getSession().then((res) => {
-      setCurrentAccount(res);
-    });
+    AppWriteService.getSession()
+      .then((res) => {
+        setCurrentAccount(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   const isUserLoggedIn = !!currentAccount?.$id;

@@ -20,13 +20,7 @@ export const AppWriteService = {
   },
 
   async getSession() {
-    try {
-      return await account.get();
-    } catch (error: any) {
-      console.error(error);
-      // toast.error(error.message || "Something went wrong");
-      return null;
-    }
+    return await account.get();
   },
 
   async login(email: string, password: string) {
