@@ -47,6 +47,7 @@ export const AuthProvider = ({
       })
       .catch((err) => {
         console.error(err);
+        setCurrentAccount(null);
       });
   }, []);
 
