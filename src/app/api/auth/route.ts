@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
         "Sec-Ch-Ua-Platform": request.headers.get("sec-ch-ua-platform") ?? "",
         "Sec-Fetch-Dest": "empty",
         "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "cross-site",
+        "Sec-Fetch-Site": "cross-origin",
         "User-Agent": request.headers.get("user-agent") ?? "",
 
         "x-appwrite-project": AppwriteProject,
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     }
 
     const ssrHostname =
-      SsrHostname === "localhost" ? SsrHostname : "" + SsrHostname;
+      SsrHostname === "localhost" ? SsrHostname : "." + SsrHostname;
     const appwriteHostname =
       AppwriteHostname === "localhost"
         ? AppwriteHostname
