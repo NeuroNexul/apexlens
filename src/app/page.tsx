@@ -6,7 +6,7 @@ import { cn } from "@lib/utils";
 import { Todo } from "@/types/todos";
 import GreetImage from "@assets/greet.svg";
 import Image from "next/image";
-import { useAuth } from "@/components/context/auth";
+import { useAuth } from "@/appwrite/auth";
 
 const todos: Todo[] = [
   {

@@ -12,8 +12,8 @@ import {
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { RefreshCw } from "lucide-react";
-import { logout } from "@/lib/appwrite-client";
-import { useAuth } from "../context/auth";
+import { AppWriteService } from "@/appwrite/client";
+import { useAuth } from "../../appwrite/auth";
 
 type Props = {};
 
@@ -64,8 +64,8 @@ export default function AvatarBtn({}: Props) {
         <DropdownMenuItem
           className="cursor-pointer"
           onClick={async (e) => {
-            await logout();
-            auth.setAccount(undefined);
+            await AppWriteService.logout();
+            auth.setAccount(null);
           }}
         >
           Logout

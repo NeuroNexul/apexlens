@@ -17,12 +17,13 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { account, login } from "@/lib/appwrite-client";
-import { useAuth } from "../context/auth";
+import { AppWriteService } from "@/appwrite/client";
+import { useAuth } from "../../appwrite/auth";
 import { LogIn } from "lucide-react";
 import Image from "next/image";
 
 import CredentialImage from "@assets/credential.svg";
+import { getCookie } from "@/lib/cookie";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -43,8 +44,20 @@ export default function LoginPage({}: Props) {
   const auth = useAuth();
 
   const onSubmit = form.handleSubmit(async (data) => {
-    await login(data.email, data.password);
-    auth.setAccount(await account.get());
+    await AppWriteService.login(data.email, data.password);
+    const cookie = getCookie(
+      "a_session_" + process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
+    );
+    AppWriteService.setSession(cookie);
+    localStorage.setItem(
+      "cookieFallback",
+      JSON.stringify({
+        ["a_session_" + process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID]: cookie,
+      })
+    );
+
+    const account = await AppWriteService.getSession();
+    auth.setAccount(account);
   });
 
   return (

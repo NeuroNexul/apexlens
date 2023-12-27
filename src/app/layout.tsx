@@ -5,9 +5,9 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/navbar";
 import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "@/components/context/auth";
-import client, { account } from "@/lib/appwrite-server";
-import { Models } from "node-appwrite";
+import { AuthProvider } from "@/appwrite/auth";
+import type { Models } from "appwrite";
+import AppwriteServerService from "@/appwrite/server";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const rubikFont = Rubik_Vinyl({
@@ -66,19 +66,8 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const theme = cookieStore.get("theme");
 
-  // Get the JWT token from the cookie store
-  // and set it to the client
-  // Get the current account to serve to the context
-  const token = cookieStore.get(`a_session_jwt`);
-  let currentAccount: Models.User<Models.Preferences>;
-
-  try {
-    client.setJWT(token?.value || "");
-    currentAccount = await account.get();
-  } catch (error: any) {
-    console.log(error);
-    currentAccount = {} as Models.User<Models.Preferences>;
-  }
+  let currentAccount: Models.User<Models.Preferences> | null =
+    await AppwriteServerService.getSession();
 
   return (
     <html
