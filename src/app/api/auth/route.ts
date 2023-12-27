@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import * as setCookie from "set-cookie-parser";
 
 const AppwriteEndpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string;
@@ -6,9 +6,17 @@ const AppwriteProject = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string;
 const SsrHostname = process.env.NEXT_PUBLIC_SSR_HOSTNAME as string;
 const AppwriteHostname = process.env.NEXT_PUBLIC_APPWRITE_HOSTNAME as string;
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();
+    const clientIP = (
+      request.ip ||
+      request.headers.get("X-Forwarded-For") ||
+      ""
+    )
+      .split(",")
+      .pop()
+      ?.trim();
 
     const response = await fetch(`${AppwriteEndpoint}/account/sessions/email`, {
       method: "POST",
@@ -42,6 +50,8 @@ export async function POST(request: Request) {
         "X-Sdk-Name": "Web",
         "X-Sdk-Platform": "client",
         "X-Sdk-Version": "13.0.1",
+
+        "X-Forwarded-For": clientIP ?? "",
       },
       body: JSON.stringify({
         email,
