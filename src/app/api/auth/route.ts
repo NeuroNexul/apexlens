@@ -63,7 +63,15 @@ export async function POST(request: NextRequest) {
 
     if (json.code >= 400) {
       console.error(json.message);
-      return NextResponse.json({ message: json.message }, { status: 400 });
+      return NextResponse.json(
+        {
+          message: json.message,
+          ip: request.ip,
+          "X-Forwarded-For": request.headers.get("X-Forwarded-For") ?? "",
+          clientIP,
+        },
+        { status: 400 }
+      );
     }
 
     const ssrHostname =
@@ -82,7 +90,14 @@ export async function POST(request: NextRequest) {
       setCookie.parseString(cookie)
     );
 
-    const nextJsResponse = NextResponse.json(json);
+    const nextJsResponse = NextResponse.json({
+      ...json,
+      extra: {
+        ip: request.ip,
+        "X-Forwarded-For": request.headers.get("X-Forwarded-For") ?? "",
+        clientIP,
+      },
+    });
 
     for (const cookie of cookiesParsed) {
       nextJsResponse.cookies.set(cookie.name, cookie.value, {
