@@ -1,0 +1,23 @@
+.loader {
+  --bar-color: #0073b1;
+
+  height: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.loader::before {
+  content: "";
+  width: 75px;
+  height: 2px;
+  position: absolute;
+  left: -34px;
+  background: var(--bar-color);
+  animation: loadBar 1.5s infinite ease;
+}
+
+/*-- load bar animation CSS--*/
+@keyframes loadBar {
+  50% {
+    left: calc(100% - 34px);
+  }
+}

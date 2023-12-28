@@ -6,6 +6,7 @@ import LoginPage from "../components/login/page";
 import AppwriteClientService from "./client";
 import { getCookie } from "@/lib/cookie";
 import { toast } from "sonner";
+import PageLoader from "@/components/loaders/page_loader";
 
 interface AuthData {
   account?: Models.User<Models.Preferences> | null;
@@ -28,6 +29,7 @@ export const AuthProvider = ({
 }) => {
   const [currentAccount, setCurrentAccount] =
     React.useState<Models.User<Models.Preferences> | null>(defaultAccount);
+  const [loading, setLoading] = React.useState(!defaultAccount);
 
   const AppwriteClient = React.useMemo(() => {
     return new AppwriteClientService();
@@ -48,10 +50,12 @@ export const AuthProvider = ({
     AppwriteClient.getSession()
       .then((res) => {
         setCurrentAccount(res);
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);
         setCurrentAccount(null);
+        setLoading(false);
       });
   }, [AppwriteClient]);
 
@@ -64,7 +68,7 @@ export const AuthProvider = ({
         setAccount: setCurrentAccount,
       }}
     >
-      {isUserLoggedIn ? children : <LoginPage />}
+      {loading ? <PageLoader /> : isUserLoggedIn ? children : <LoginPage />}
     </AuthContext.Provider>
   );
 };
