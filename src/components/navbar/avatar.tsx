@@ -12,13 +12,16 @@ import {
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { RefreshCw } from "lucide-react";
-import { AppWriteService } from "@/appwrite/client";
+import AppWriteClientService from "@/appwrite/client";
 import { useAuth } from "../../appwrite/auth";
 
 type Props = {};
 
 export default function AvatarBtn({}: Props) {
   const auth = useAuth();
+  const AppwriteClient = React.useMemo(() => {
+    return new AppWriteClientService();
+  }, []);
 
   return (
     <DropdownMenu>
@@ -64,7 +67,7 @@ export default function AvatarBtn({}: Props) {
         <DropdownMenuItem
           className="cursor-pointer"
           onClick={async (e) => {
-            await AppWriteService.logout();
+            await AppwriteClient.deleteSession();
             auth.setAccount(null);
           }}
         >

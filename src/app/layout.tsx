@@ -66,8 +66,10 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const theme = cookieStore.get("theme");
 
+  const AppwriteServer = new AppwriteServerService();
+
   let currentAccount: Models.User<Models.Preferences> | null =
-    await AppwriteServerService.getSession();
+    await AppwriteServer.getServerSession();
 
   return (
     <html

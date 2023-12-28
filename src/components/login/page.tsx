@@ -17,7 +17,7 @@ import {
 } from "../ui/form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { AppWriteService } from "@/appwrite/client";
+import AppWriteClientService from "@/appwrite/client";
 import { useAuth } from "../../appwrite/auth";
 import { LogIn } from "lucide-react";
 import Image from "next/image";
@@ -42,13 +42,16 @@ export default function LoginPage({}: Props) {
   });
 
   const auth = useAuth();
+  const AppwriteClient = React.useMemo(() => {
+    return new AppWriteClientService();
+  }, []);
 
   const onSubmit = form.handleSubmit(async (data) => {
-    await AppWriteService.login(data.email, data.password);
+    await AppwriteClient.login(data.email, data.password);
     const cookie = getCookie(
       "a_session_" + process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
     );
-    AppWriteService.setSession(cookie);
+    // AppwriteClient.setSession(cookie);
     localStorage.setItem(
       "cookieFallback",
       JSON.stringify({
@@ -56,7 +59,7 @@ export default function LoginPage({}: Props) {
       })
     );
 
-    const account = await AppWriteService.getSession();
+    const account = await AppwriteClient.getSession();
     auth.setAccount(account);
   });
 

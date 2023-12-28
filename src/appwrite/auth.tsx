@@ -3,7 +3,7 @@
 import { Models } from "appwrite";
 import React from "react";
 import LoginPage from "../components/login/page";
-import { AppWriteService } from "./client";
+import AppwriteClientService from "./client";
 import { getCookie } from "@/lib/cookie";
 import { toast } from "sonner";
 
@@ -29,6 +29,10 @@ export const AuthProvider = ({
   const [currentAccount, setCurrentAccount] =
     React.useState<Models.User<Models.Preferences> | null>(defaultAccount);
 
+  const AppwriteClient = React.useMemo(() => {
+    return new AppwriteClientService();
+  }, []);
+
   React.useEffect(() => {
     const cookie = getCookie(
       "a_session_" + process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
@@ -41,7 +45,7 @@ export const AuthProvider = ({
       })
     );
 
-    AppWriteService.getSession()
+    AppwriteClient.getSession()
       .then((res) => {
         setCurrentAccount(res);
       })
@@ -49,7 +53,7 @@ export const AuthProvider = ({
         console.error(err);
         setCurrentAccount(null);
       });
-  }, []);
+  }, [AppwriteClient]);
 
   const isUserLoggedIn = !!currentAccount?.$id;
 

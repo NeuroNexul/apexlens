@@ -1,14 +1,13 @@
+import "server-only";
 import { cookies } from "next/headers";
-import { AppWriteService } from "./client";
-import type { Models } from "appwrite";
+import type { Models } from "node-appwrite";
+import { AppWriteService } from "./appwrite";
 
-const appwriteProject = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string;
-
-const AppwriteServerService = {
-  async getSession(): Promise<Models.User<Models.Preferences> | null> {
+export default class AppwriteServerService extends AppWriteService {
+  async getServerSession(): Promise<Models.User<Models.Preferences> | null> {
     const sessionNames = [
-      "a_session_" + appwriteProject.toLowerCase(),
-      "a_session_" + appwriteProject.toLowerCase() + "_legacy",
+      "a_session_" + this.appwriteProject.toLowerCase(),
+      "a_session_" + this.appwriteProject.toLowerCase() + "_legacy",
     ];
 
     const cookieStore = cookies();
@@ -16,17 +15,16 @@ const AppwriteServerService = {
       cookieStore.get(sessionNames[0]) ??
       cookieStore.get(sessionNames[1]) ??
       null;
-    AppWriteService.setSession(hash ? hash.value : "");
+    this.setSession(hash ? hash.value : "");
 
-    let account;
+    let account: Models.User<Models.Preferences> | null = null;
     try {
-      account = await AppWriteService.getSession();
+      account = await this.getSession();
     } catch (err) {
+      console.error(err);
       account = null;
     }
 
     return account;
-  },
-};
-
-export default AppwriteServerService;
+  }
+}

@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
         sameSite: cookie.sameSite as any,
         path: cookie.path,
         maxAge: cookie.maxAge,
-        httpOnly: cookie.httpOnly,
+        httpOnly: false,
         expires: cookie.expires,
       });
     }

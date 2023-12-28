@@ -1,28 +1,9 @@
-import { Client, Account, ID } from "appwrite";
+"use client";
+
 import { toast } from "sonner";
+import { AppWriteService } from "./appwrite";
 
-const appwriteEndpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string;
-const appwriteProject = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string;
-
-const client = new Client()
-  .setEndpoint(appwriteEndpoint)
-  .setProject(appwriteProject);
-
-export default client;
-
-export const account = new Account(client);
-
-export const AppWriteService = {
-  setSession(hash: string) {
-    const authCookies: any = {};
-    authCookies["a_session_" + appwriteProject] = hash;
-    client.headers["X-Fallback-Cookies"] = JSON.stringify(authCookies);
-  },
-
-  async getSession() {
-    return await account.get();
-  },
-
+export default class AppwriteClientService extends AppWriteService {
   async login(email: string, password: string) {
     try {
       // const session = await account.createEmailSession(email, password);
@@ -43,14 +24,5 @@ export const AppWriteService = {
     } catch (error: any) {
       toast.error(error.message || "Something went wrong");
     }
-  },
-
-  async logout() {
-    try {
-      await account.deleteSession("current");
-      toast.success("Logged out successfully");
-    } catch (error: any) {
-      toast.error(error.message || "Something went wrong");
-    }
-  },
-};
+  }
+}
