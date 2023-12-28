@@ -33,7 +33,7 @@ export const AuthProvider = ({
     const cookie = getCookie(
       "a_session_" + process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID
     );
-    AppWriteService.setSession(cookie);
+    // AppWriteService.setSession(cookie);
     localStorage.setItem(
       "cookieFallback",
       JSON.stringify({
