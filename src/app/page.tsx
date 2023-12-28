@@ -72,7 +72,7 @@ export default function Home() {
                   "h-[calc(200%+10px)] w-auto min-h-full", // Size
                   "absolute -top-28 right-0", // Container
                   // Fade left side
-                  "filter brightness-100 contrast-125 opacity-80"
+                  "filter brightness-100 contrast-125 opacity-80 blur-[2px] md:blur-0"
                 )}
                 style={{
                   WebkitMaskImage:
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
 
             <div
-              className="p-4 flex flex-col justify-stretch items-start gap-4 drop-shadow-lg"
+              className="p-4 flex flex-col justify-stretch items-start gap-4 drop-shadow-lg lg:w-2/3"
               style={{
                 height: "100%",
                 backgroundImage:
@@ -93,7 +93,7 @@ export default function Home() {
             >
               <h2
                 className={cn(
-                  "text-6xl p-2 font-rubik_vinyl tracking-[0.2em]" // Text
+                  "text-6xl p-2 font-rubik_vinyl tracking-[0.2em] drop-shadow-lg" // Text
                 )}
               >
                 Hi,{" "}
