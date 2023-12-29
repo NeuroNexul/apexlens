@@ -1,0 +1,35 @@
+.content {
+  /* Variables */
+  --background-color: hsl(var(--background));
+  --foreground-color: hsl(var(--foreground));
+
+  --card-color: hsl(var(--card));
+  --card-foreground-color: hsl(var(--card-foreground));
+
+  --popover-color: hsl(var(--popover));
+  --popover-foreground-color: hsl(var(--popover-foreground));
+
+  --primary-color: hsl(var(--primary));
+  --primary-foreground-color: hsl(var(--primary-foreground));
+
+  --secondary-color: hsl(var(--secondary));
+  --secondary-foreground-color: hsl(var(--secondary-foreground));
+
+  --muted-color: hsl(var(--muted));
+  --muted-foreground-color: hsl(var(--muted-foreground));
+
+  --accent-color: hsl(var(--accent));
+  --accent-foreground-color: hsl(var(--accent-foreground));
+
+  --destructive-color: hsl(var(--destructive));
+  --destructive-foreground-color: hsl(var(--destructive-foreground));
+
+  --border-color: hsl(var(--border));
+  --input-color: hsl(var(--input));
+  --ring-color: hsl(var(--ring));
+
+  max-width: 800px;
+  min-height: 100%;
+  margin: 0 auto;
+  color: var(--foreground-color);
+}

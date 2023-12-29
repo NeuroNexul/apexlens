@@ -9,7 +9,7 @@ export default function PageLoader({}: Props) {
   return (
     <div className="w-full h-full relative grid place-items-center">
       <div
-        className={cn("fixed top-0 left-0 w-full h-full")}
+        className={cn("absolute top-0 left-0 w-full h-full")}
         style={{
           boxShadow: "rgb(0 0 0 / 90%) 0px 0px 200px 100px inset",
         }}

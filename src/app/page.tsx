@@ -84,11 +84,13 @@ export default function Home() {
             </div>
 
             <div
-              className="p-4 flex flex-col justify-stretch items-start gap-4 drop-shadow-lg lg:w-2/3"
+              className="p-4 flex flex-col justify-stretch items-start gap-4 lg:w-2/3"
               style={{
                 height: "100%",
                 backgroundImage:
                   "linear-gradient(to right, hsl(var(--background)) 0%, hsl(var(--background)) 12%, transparent 75%, transparent 100%)",
+                filter:
+                  "drop-shadow(0 10px 8px rgb(0 0 0 / 0.6)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.7))",
               }}
             >
               <h2
@@ -101,7 +103,7 @@ export default function Home() {
                   {auth.account?.name.split(" ")[0]}!
                 </span>
               </h2>
-              <p className="text-lg font-medium text-muted-foreground">
+              <p className="text-lg font-medium text-muted-foreground lg:w-4/5">
                 Welcome to your most personalized productivity dashboard.
               </p>
             </div>

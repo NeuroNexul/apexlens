@@ -29,7 +29,7 @@ export default function AvatarBtn({}: Props) {
         <Button
           variant="outline"
           size="icon"
-          className="overflow-hidden aspect-square"
+          className="overflow-hidden aspect-square flex-shrink-0"
         >
           <Avatar className={`h-full w-full rounded-none`}>
             <AvatarImage

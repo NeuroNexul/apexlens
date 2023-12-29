@@ -68,8 +68,8 @@ export default async function RootLayout({
 
   const AppwriteServer = new AppwriteServerService();
 
-  let currentAccount: Models.User<Models.Preferences> | null =
-    await AppwriteServer.getServerSession();
+  let currentAccount: Models.User<Models.Preferences> | null = null;
+  // await AppwriteServer.getServerSession();
 
   return (
     <html
