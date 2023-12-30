@@ -4,6 +4,7 @@ import React from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import PageLoader from "@/components/loaders/page_loader";
 import { editor } from "monaco-editor";
+import { defineTheme } from "./code_editor/theme";
 // @ts-ignore
 // import monacoThemes from "monaco-themes/themes/themelist";
 
@@ -20,19 +21,7 @@ export default function CodeEditor({ slug, content, setContent }: Props) {
   function handleEditorWillMount(monaco: Monaco) {
     console.log("Monaco editor mounting.");
 
-    monaco.editor.defineTheme("slate-dark", {
-      base: "vs-dark",
-      inherit: true,
-      rules: [],
-      colors: {
-        "editor.background": "#020817",
-        "editor.foreground": "#ffffff",
-        "editor.selectionBackground": "#1e293bab",
-        "editor.lineHighlightBackground": "#1e293bab",
-        "editorCursor.foreground": "#ffffff",
-        "editorWhitespace.foreground": "#94a3b899",
-      },
-    });
+    defineTheme(monaco, "dark"); // Define the dark theme
   }
 
   function handleEditorDidMount(
@@ -56,6 +45,7 @@ export default function CodeEditor({ slug, content, setContent }: Props) {
           "semanticHighlighting.enabled": true,
           minimap: { enabled: false },
           mouseWheelZoom: true,
+          fontSize: 12,
         }}
         onMount={handleEditorDidMount}
         beforeMount={handleEditorWillMount}

@@ -1229,6 +1229,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@primer/primitives@^7.15.5":
+  version "7.15.5"
+  resolved "https://registry.yarnpkg.com/@primer/primitives/-/primitives-7.15.5.tgz#7248b10b2dac3572379e6d84377c29570e436778"
+  integrity sha512-tiJEMxy5hDi9a3YxgrBeJScLPUQSLuWsKDNuoXXiX7zLzejnYdxXXG3qOaNHzNyyn8TkSQkzmKx0ioaSLR2zNw==
+
 "@radix-ui/number@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@radix-ui/number/-/number-1.0.1.tgz#644161a3557f46ed38a042acf4a770e826021674"
@@ -1689,6 +1694,11 @@
   integrity sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==
   dependencies:
     "@types/estree" "*"
+
+"@types/chroma-js@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@types/chroma-js/-/chroma-js-2.4.3.tgz#2f10bd16483a87d8ead68764fc439550e9c4cbb6"
+  integrity sha512-1ly5ly/7S/YF8aD7MxUQnFOZxdegimuOunJl0xDsLlguu5JrwuSTVGVH3UpIUlh6YauI0RMNT4cqjBonhgbdIQ==
 
 "@types/debug@^4.0.0":
   version "4.1.12"
@@ -2315,6 +2325,11 @@ chokidar@^3.5.3:
     readdirp "~3.6.0"
   optionalDependencies:
     fsevents "~2.3.2"
+
+chroma-js@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/chroma-js/-/chroma-js-2.4.2.tgz#dffc214ed0c11fa8eefca2c36651d8e57cbfb2b0"
+  integrity sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==
 
 class-variance-authority@^0.7.0:
   version "0.7.0"

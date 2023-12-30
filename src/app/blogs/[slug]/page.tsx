@@ -36,6 +36,8 @@ Some normal \`markdown\`
 console.log("Some code. I am annotated!")
 \`\`\`
 
+{/* Hello Comment */}
+
 ## Focus Example
 \`\`\`js next.config.js focus=1:2,7
 const { remarkCodeHike } = require("@code-hike/mdx");
