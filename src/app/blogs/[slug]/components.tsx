@@ -1,13 +1,23 @@
 import { MDXProvider } from "@mdx-js/react";
 
 const components: React.ComponentProps<typeof MDXProvider>["components"] = {
-  h1: (props) => <h1 className="text-4xl font-bold" {...props} />,
-  h2: (props) => <h2 className="text-3xl font-bold" {...props} />,
-  h3: (props) => <h3 className="text-2xl font-bold" {...props} />,
-  h4: (props) => <h4 className="text-xl font-bold" {...props} />,
-  h5: (props) => <h5 className="text-lg font-bold" {...props} />,
-  h6: (props) => <h6 className="text-base font-bold" {...props} />,
-  p: (props) => <p className="text-base" {...props} />,
+  h1: (props) => (
+    <h1
+      className="text-4xl font-bold mt-2 mb-4 border-b-[3px] pb-2"
+      {...props}
+    />
+  ),
+  h2: (props) => (
+    <h2
+      className="text-3xl font-bold mt-2 mb-4 border-b-[3px] pb-2"
+      {...props}
+    />
+  ),
+  h3: (props) => <h3 className="text-2xl font-bold mt-2 mb-4" {...props} />,
+  h4: (props) => <h4 className="text-xl font-bold mt-2 mb-4" {...props} />,
+  h5: (props) => <h5 className="text-lg font-bold mt-2 mb-4" {...props} />,
+  h6: (props) => <h6 className="text-base font-bold mt-2 mb-4" {...props} />,
+  p: (props) => <p className="text-base mt-2 mb-2" {...props} />,
   a: (props) => <a className="text-primary" {...props} />,
   ul: (props) => <ul className="list-disc list-inside" {...props} />,
   ol: (props) => <ol className="list-decimal list-inside" {...props} />,
@@ -25,7 +35,12 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
   inlineCode: (props) => (
     <code className="px-1 py-0.5 bg-background text-primary" {...props} />
   ),
-  pre: (props) => <pre className="p-2 bg-background" {...props} />,
+  pre: (props) => (
+    <pre
+      className="p-2 bg-muted text-muted-foreground rounded-md mt-2 mb-2"
+      {...props}
+    />
+  ),
   YouTube: ({ id, title, ...props }) => (
     <div className="w-full h-auto max-w-[40rem] mx-auto rounded-lg overflow-hidden mt-4 mb-2">
       <iframe

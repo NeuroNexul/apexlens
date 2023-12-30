@@ -5,6 +5,7 @@ import Editor, { Monaco } from "@monaco-editor/react";
 import PageLoader from "@/components/loaders/page_loader";
 import { editor } from "monaco-editor";
 import { defineTheme } from "./code_editor/theme";
+import registerMdxLanguage from "./code_editor/mdx-lang";
 // @ts-ignore
 // import monacoThemes from "monaco-themes/themes/themelist";
 
@@ -22,6 +23,7 @@ export default function CodeEditor({ slug, content, setContent }: Props) {
     console.log("Monaco editor mounting.");
 
     defineTheme(monaco, "dark"); // Define the dark theme
+    // registerMdxLanguage(monaco); // Register the mdx language
   }
 
   function handleEditorDidMount(
@@ -38,7 +40,7 @@ export default function CodeEditor({ slug, content, setContent }: Props) {
         height="100%"
         defaultLanguage="mdx"
         defaultValue={content}
-        // onChange={(value) => setContent(value || "")}
+        onChange={(value) => setContent(value || "")}
         theme="slate-dark"
         loading={<PageLoader />}
         options={{
@@ -46,6 +48,17 @@ export default function CodeEditor({ slug, content, setContent }: Props) {
           minimap: { enabled: false },
           mouseWheelZoom: true,
           fontSize: 12,
+
+          // Automatic Layout
+          automaticLayout: true,
+          autoClosingBrackets: "beforeWhitespace",
+          autoClosingQuotes: "beforeWhitespace",
+          autoClosingComments: "beforeWhitespace",
+          autoIndent: "advanced",
+          bracketPairColorization: {
+            enabled: true,
+          },
+          smoothScrolling: true,
         }}
         onMount={handleEditorDidMount}
         beforeMount={handleEditorWillMount}

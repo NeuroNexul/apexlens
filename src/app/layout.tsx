@@ -1,13 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
 import { Inter, Rubik_Vinyl, Noto_Serif_Georgian } from "next/font/google";
-import "./globals.css";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/navbar";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/appwrite/auth";
 import type { Models } from "appwrite";
 import AppwriteServerService from "@/appwrite/server";
+
+import "./globals.css";
+import "@code-hike/mdx/dist/index.css";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const rubikFont = Rubik_Vinyl({

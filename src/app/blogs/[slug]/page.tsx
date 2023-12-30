@@ -26,48 +26,93 @@ export default function Page({
   params: { slug },
   searchParams: { tab },
 }: Props) {
-  const [content, setContent] =
-    React.useState<string>(`# Just testing out [Code Hike](https://codehike.org/)
+  const [content, setContent] = React.useState<string>(`## My custom MDX editor
 
-Some normal \`markdown\`
+This is a custom MDX editor that I built for my own use. It's a work in progress, but it's already usable.
 
-## Annotation Example
-\`\`\`js index.js box=1[25:39]
-console.log("Some code. I am annotated!")
+## Features
+
+-   Live preview
+-   Syntax highlighting (Monaco editor)
+-   All MDX features
+-   Customizable theme
+-   Enhanced UX
+
+## Some examples
+
+### Paragraphs
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliqua nisi nun.
+
+### Inline code
+
+\`const a = 1\`
+
+### Code blocks
+
+\`\`\`js
+import React from 'react'
+
+type Props = {}
+
+export default function MyComponent({}: Props) {
+  return (
+    <div>MyComponent</div>
+  )
+}
 \`\`\`
 
-{/* Hello Comment */}
+### Tables
 
-## Focus Example
-\`\`\`js next.config.js focus=1:2,7
-const { remarkCodeHike } = require("@code-hike/mdx");
-const theme = require("shiki/themes/monokai.json");
+| Name  | Age |
+| ----- | --- |
+| Alice | 20  |
+| Bob   | 21  |
+| Carol | 22  |
 
-const withMDX = require("@next/mdx")({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [[remarkCodeHike, { theme }]],
-    rehypePlugins: [],
-  },
-});
+### Lists
 
-module.exports = withMDX({
-  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-});
-\`\`\`
+-   Item 1
+-   Item 2
+-   Item 3
+  -   Item 3.1
+  -   Item 3.2
+  -   Item 3.3
+-   Item 4
 
-<section>
-    ## Code Links Example
+### Links
 
-    We are looking at the [console.log](focus://console.js#2) function today
+-   [Google](https://google.com)
+-   [GitHub](https://github.com)
+-   [Twitter](https://twitter.com)
 
-    <code>
-        \`\`\`js console.js
-        console.table(["Hello", "World"])
-        console.log("Hello World")
-        \`\`\`
-    </code>
-</section>`);
+### Images
+
+![Image](https://picsum.photos/200/300)
+
+### Blockquotes
+
+> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl eget ultricies aliquam, nunc nisl aliquet nunc, vitae aliquam nisi nun
+
+### Emphasis
+
+-   **Bold**
+-   _Italic_
+-   ~~Strikethrough~~
+
+### Headings
+
+# Heading 1
+## Heading 2
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+### Horizontal rules
+
+---
+`);
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
   const tab_button_class = cn(
@@ -153,7 +198,7 @@ module.exports = withMDX({
           </div>
         </ScrollArea>
       </div>
-      <div className="flex-1 relative w-full h-full">
+      <div className="flex-1 relative w-full h-[calc(100%-40px)]">
         <TabsContent value="meta_data" className="mt-0 h-full">
           <MetaData slug={slug} />
         </TabsContent>

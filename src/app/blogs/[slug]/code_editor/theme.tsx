@@ -17,8 +17,8 @@ export function defineTheme(monaco: Monaco, theme: "dark" | "light") {
     colors: {
       "editor.background": "#020817",
       "editor.foreground": "#ffffff",
-      "editor.selectionBackground": "#1e293bab",
-      "editor.lineHighlightBackground": "#1e293bab",
+      "editor.selectionBackground": "#1e293bcc",
+      "editor.lineHighlightBackground": "#1e293bcc",
       "editorCursor.foreground": "#ffffff",
       "editorWhitespace.foreground": "#94a3b899",
       "editorSuggestWidget.background": "#020817",
