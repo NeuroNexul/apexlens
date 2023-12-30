@@ -19,8 +19,8 @@ async function serializeContent(content: string): Promise<{
       source: content,
       options: {
         mdxOptions: {
-          // development: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
-          development: true,
+          development: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
+          // development: true,
           remarkPlugins: [
             // [remarkCodeHike, { theme: "dark-plus" }]
           ],
