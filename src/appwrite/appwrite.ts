@@ -1,4 +1,4 @@
-import { Client, Account } from "appwrite";
+import { Client, Account, Databases } from "appwrite";
 
 const appwriteEndpoint = process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT as string;
 const appwriteProject = process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID as string;
@@ -7,6 +7,7 @@ export class AppWriteService {
   // Private properties
   protected client: Client;
   protected account: Account;
+  database: Databases;
 
   // api keys
   appwriteEndpoint = appwriteEndpoint;
@@ -18,6 +19,7 @@ export class AppWriteService {
       .setProject(appwriteProject);
 
     this.account = new Account(this.client);
+    this.database = new Databases(this.client);
   }
 
   // Public methods

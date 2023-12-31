@@ -9,6 +9,7 @@ import type { Models } from "appwrite";
 import AppwriteServerService from "@/appwrite/server";
 
 import "./globals.css";
+import "./mdx.scss";
 import "@code-hike/mdx/dist/index.css";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans" });

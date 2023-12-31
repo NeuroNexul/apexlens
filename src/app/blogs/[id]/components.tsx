@@ -1,3 +1,4 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { MDXProvider } from "@mdx-js/react";
 
 const components: React.ComponentProps<typeof MDXProvider>["components"] = {
@@ -19,21 +20,49 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
   h6: (props) => <h6 className="text-base font-bold mt-2 mb-4" {...props} />,
   p: (props) => <p className="text-base mt-2 mb-2" {...props} />,
   a: (props) => <a className="text-primary" {...props} />,
-  ul: (props) => <ul className="list-disc list-inside" {...props} />,
-  ol: (props) => <ol className="list-decimal list-inside" {...props} />,
+  ul: (props) => <ul className="list-inside" {...props} />,
+  ol: (props) => <ol className="list-inside" {...props} />,
   li: (props) => <li className="text-base" {...props} />,
   blockquote: (props) => (
     <blockquote className="border-l-4 border-primary pl-4" {...props} />
   ),
   hr: (props) => <hr className="my-4" {...props} />,
-  table: (props) => <table className="w-full" {...props} />,
-  thead: (props) => <thead className="bg-background" {...props} />,
+  table: (props) => (
+    <figure className="w-full h-auto rounded-lg border-[3px] overflow-hidden mt-4 mb-2">
+      <ScrollArea className="w-full h-full" orientation="horizontal">
+        <table className="w-full" {...props} />
+      </ScrollArea>
+    </figure>
+  ),
+  thead: (props) => <thead className="bg-muted/40" {...props} />,
   tbody: (props) => <tbody className="bg-background" {...props} />,
-  th: (props) => <th className="p-2 font-bold text-left" {...props} />,
-  tr: (props) => <tr className="border-b border-muted-foreground" {...props} />,
-  td: (props) => <td className="p-2" {...props} />,
+  th: (props) => (
+    <th className="p-2 font-bold text-center border-r" {...props} />
+  ),
+  tr: (props) => <tr className="border-b" {...props} />,
+  td: (props) => <td className="p-2 border-r" {...props} />,
+  img: (props) => {
+    return (
+      <figure className="inline-table clear-both w-auto max-w-[40rem] h-auto max-h-[30rem] mx-auto mt-4 mb-2 px-2 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="block rounded-lg mx-auto max-w-full max-h-[30rem] object-contain"
+          alt={props.alt || ""}
+          {...props}
+        />
+        {props.title && (
+          <figcaption className="text-center text-sm text-muted-foreground py-1">
+            {props.title}
+          </figcaption>
+        )}
+      </figure>
+    );
+  },
   inlineCode: (props) => (
-    <code className="px-1 py-0.5 bg-background text-primary" {...props} />
+    <code
+      className="px-1 py-0.5 bg-muted/50 text-primary rounded-sm"
+      {...props}
+    />
   ),
   pre: (props) => (
     <pre

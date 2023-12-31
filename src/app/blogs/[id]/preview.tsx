@@ -1,13 +1,14 @@
 "use client";
 
 import React from "react";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { CompileMDXResult, compileMDX } from "next-mdx-remote/rsc";
 import { remarkCodeHike } from "@code-hike/mdx";
+import remarkGfm from "remark-gfm";
+import { CH } from "@code-hike/mdx/components";
 import { cn } from "@/lib/utils";
-import style from "./preview.module.css";
 import components from "./components";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { Button } from "@/components/ui/button";
 
 async function serializeContent(content: string): Promise<{
@@ -20,18 +21,29 @@ async function serializeContent(content: string): Promise<{
       options: {
         mdxOptions: {
           development: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
-          // development: true,
           remarkPlugins: [
-            // [remarkCodeHike, { theme: "dark-plus" }]
+            // [
+            //   remarkCodeHike,
+            //   {
+            //     autoImport: false,
+            //     theme: "dark-plus",
+            //   },
+            // ],
+            remarkGfm,
           ],
           rehypePlugins: [],
           baseUrl: "/",
           useDynamicImport: true,
         },
-        scope: {},
+        scope: {
+          // CH,
+        },
         parseFrontmatter: false,
       },
-      components,
+      components: {
+        ...components,
+        // CH,
+      },
     });
 
     return { res };
@@ -67,7 +79,7 @@ export default function Preview({ slug, content }: Props) {
   return (
     <div className="w-full h-full bg-background">
       <ScrollArea className="w-full h-full scroll-block" orientation="vertical">
-        <div className={cn("w-full p-2", style.content)}>
+        <div className={cn("mdx w-full p-2")}>
           <ErrorBoundary errorComponent={ErrorComp}>
             {mdxNode ? mdxNode?.content : <ErrorComp error={error} />}
           </ErrorBoundary>

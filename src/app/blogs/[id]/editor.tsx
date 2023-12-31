@@ -48,6 +48,7 @@ export default function CodeEditor({ slug, content, setContent }: Props) {
           minimap: { enabled: false },
           mouseWheelZoom: true,
           fontSize: 12,
+          wordWrap: "on",
 
           // Automatic Layout
           automaticLayout: true,

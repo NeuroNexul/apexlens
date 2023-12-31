@@ -20,7 +20,7 @@ export function defineTheme(monaco: Monaco, theme: "dark" | "light") {
       "editor.selectionBackground": "#1e293bcc",
       "editor.lineHighlightBackground": "#1e293bcc",
       "editorCursor.foreground": "#ffffff",
-      "editorWhitespace.foreground": "#94a3b899",
+      "editorWhitespace.foreground": "#94a3b877",
       "editorSuggestWidget.background": "#020817",
       "editorSuggestWidget.border": "#1e293b",
       "editorSuggestWidget.foreground": "#ffffff",
@@ -65,6 +65,10 @@ export function defineTheme(monaco: Monaco, theme: "dark" | "light") {
 
       "editor.wordHighlightBackground": "#1e293bab",
       "editor.wordHighlightStrongBackground": "#1e293bab",
+
+      "scrollbarSlider.background": "#1e293b99",
+      "scrollbarSlider.hoverBackground": "#1e293b",
+      "scrollbarSlider.activeBackground": "#1e293b",
     },
     rules: [
       {
