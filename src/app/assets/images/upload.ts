@@ -89,7 +89,7 @@ export default function upload(
 
   const formData = new FormData();
   formData.append("timestamp", timestamp.toString());
-  formData.append("upload_preset", "spilab");
+  formData.append("upload_preset", "upload");
 
   for (let i = 0; i < files.length; i++) {
     const xhr = new XMLHttpRequest();
