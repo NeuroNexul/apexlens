@@ -2,6 +2,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { slugify } from "@/lib/utils";
 import { Models } from "appwrite";
 import React from "react";
 
@@ -24,7 +25,13 @@ export default function MetaData({ slug, data, setData }: Props) {
               name="title"
               placeholder="Title"
               value={data?.title || ""}
-              onChange={(e) => setData({ ...data, title: e.target.value })}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  title: e.target.value,
+                  slug: slugify(e.target.value),
+                })
+              }
               className="mt-1"
             />
           </div>

@@ -1,0 +1,52 @@
+.uploadDiv {
+  &.dragged {
+    background-color: hsl(var(--muted) / 0.5);
+    border: 3px dashed hsl(var(--border));
+
+    .uploadFileIcon:nth-child(1) {
+      transform: translateY(-5px);
+    }
+
+    .uploadFileIcon:nth-child(2) {
+      transform: rotate(10deg) translateX(20px) scale(0.9);
+      filter: grayscale(0.5);
+    }
+
+    .uploadFileIcon:nth-child(3) {
+      transform: rotate(-10deg) translateX(-20px) scale(0.9);
+      filter: grayscale(0.5);
+    }
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  .uploadIconsContainer {
+    width: 80px;
+    height: 100px;
+
+    .uploadFileIcon {
+      width: 80px;
+      position: absolute;
+      transform-origin: bottom;
+      transition: all 0.25s ease-in-out;
+
+      &:nth-child(1) {
+        z-index: 2;
+      }
+    }
+  }
+
+  .uploadTitle {
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    margin-top: 10px;
+
+    span {
+      color: #47a6da;
+    }
+  }
+}

@@ -3,8 +3,11 @@
 import { cn } from "@/lib/utils";
 import {
   BarChart,
+  FileImage,
+  FileText,
   Home,
   MessageSquareQuote,
+  PackageOpen,
   PenLine,
   ServerCog,
   Settings,
@@ -53,6 +56,23 @@ const NavItems = (): NavItem[] => [
     name: "Testimonials",
     href: "#",
     icon: <MessageSquareQuote size={24} />,
+  },
+  {
+    name: "Assets",
+    href: "/assets",
+    icon: <PackageOpen size={24} />,
+    children: [
+      {
+        name: "Images/Videos",
+        href: "/assets/images",
+        icon: <FileImage size={24} />,
+      },
+      {
+        name: "Documents",
+        href: "#",
+        icon: <FileText size={24} />,
+      },
+    ],
   },
   {
     name: "Analytics",

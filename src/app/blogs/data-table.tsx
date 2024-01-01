@@ -30,7 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDownIcon, PlusIcon, RefreshCw } from "lucide-react";
+import { ChevronDownIcon, Loader2, PlusIcon, RefreshCw } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
@@ -41,6 +41,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import AppwriteClientService from "@/appwrite/client";
+import { ID, Query } from "appwrite";
+import { toast } from "sonner";
 
 interface DataTableProps<TData, TValue> {
   initial_data: TData[];
@@ -49,6 +52,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   initial_data,
 }: DataTableProps<TData, TValue>) {
+  const appwriteClient = React.useMemo(() => new AppwriteClientService(), []);
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -65,9 +70,88 @@ export function DataTable<TData, TValue>({
     setData(initial_data);
   }, [initial_data]);
 
+  function createBlog() {
+    startTransition(() => {
+      const id = new Date().getTime().toString();
+      appwriteClient.database
+        .createDocument("production", "blogs", ID.unique(), {
+          content:
+            "## Clemontic Gear, ON!\nThe future is now, thanks to science! Clemontic Gear, ON!",
+          description:
+            "The future is now, thanks to science! Clemontic Gear, ON!",
+          published: false,
+          reading_time: 0,
+          slug: id,
+          tags: ["clemontic-gear", "science"],
+          thumbnail:
+            "https://res.cloudinary.com/di9pwtpmy/image/upload/v1704099460/image_uploads/Other_Dimension_Converter_kttewu.webp",
+          title: "(New Blog) Clemontic Gear, ON!",
+          view: 0,
+          view_ip: [],
+        })
+        .then((response) => {
+          if (response.$id) {
+            setData((prev) => [
+              ...prev,
+              {
+                description: response.description,
+                published: response.published,
+                reading_time: response.reading_time,
+                slug: response.slug,
+                tags: response.tags,
+                thumbnail: response.thumbnail,
+                title: response.title,
+                view: response.view,
+                view_ip: response.view_ip,
+                $id: response.$id,
+                $createdAt: response.$createdAt,
+                $updatedAt: response.$updatedAt,
+              } as any,
+            ]);
+            toast.success("Blog created successfully.");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Failed to create blog.");
+        });
+    });
+  }
+
+  function refreshData() {
+    startTransition(() => {
+      appwriteClient.database
+        .listDocuments("production", "blogs", [
+          Query.select([
+            "description",
+            "published",
+            "reading_time",
+            "slug",
+            "tags",
+            "thumbnail",
+            "title",
+            "view",
+            "view_ip",
+            "$id",
+            "$createdAt",
+            "$updatedAt",
+          ]),
+        ])
+        .then((response) => {
+          setData(response.documents as any);
+          toast.success("Data refreshed successfully.");
+        })
+        .catch((error) => {
+          console.error(error);
+          toast.error("Failed to refresh data.");
+        });
+    });
+  }
+
   const columns = useColumns({
     openedBlog,
     setopenedBlog,
+    refreshData,
   }) as ColumnDef<TData, TValue>[];
 
   const table = useReactTable({
@@ -96,6 +180,12 @@ export function DataTable<TData, TValue>({
         "bg-background/70 backdrop-blur-[2px] supports-[backdrop-filter]:bg-background/20" // Background
       )}
     >
+      {isPending && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/40 z-10">
+          <Loader2 size={48} className="animate-spin" />
+        </div>
+      )}
+
       <div className="flex items-center justify-between gap-1 border-b-4 p-2">
         <div className="flex gap-1">
           <Input
@@ -167,11 +257,11 @@ export function DataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" onClick={refreshData}>
             <RefreshCw className="h-4 w-4" />
           </Button>
 
-          <Button variant="outline" size="icon">
+          <Button variant="outline" size="icon" onClick={createBlog}>
             <PlusIcon className="h-4 w-4" />
           </Button>
         </div>

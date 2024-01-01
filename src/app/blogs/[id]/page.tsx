@@ -72,6 +72,8 @@ export default function Page({ params: { id }, searchParams: { tab } }: Props) {
       toast.success("Blog post saved successfully");
     } catch (e) {
       console.error(e);
+      setIsSaving(false);
+      setIsRefreshing(false);
       toast.error("Failed to save the blog post");
     }
   };

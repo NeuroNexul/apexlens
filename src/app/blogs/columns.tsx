@@ -42,13 +42,16 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import AppwriteClientService from "@/appwrite/client";
 
 export const useColumns = ({
   openedBlog,
   setopenedBlog,
+  refreshData,
 }: {
   openedBlog: string;
   setopenedBlog: (value: string) => void;
+  refreshData: () => void;
 }): ColumnDef<PartialCreatedBlogDocumentType>[] => {
   return [
     {
@@ -73,7 +76,9 @@ export const useColumns = ({
     {
       id: "actions",
       enableHiding: false,
-      cell: ({ row }) => <ActionsComponent row={row} />,
+      cell: ({ row }) => (
+        <ActionsComponent row={row} refreshData={refreshData} />
+      ),
     },
     {
       accessorKey: "title",
@@ -92,7 +97,9 @@ export const useColumns = ({
                 className="rounded-md h-full w-auto max-w-[80px]"
               />
             </span>
-            <span className="w-full line-clamp-2">{data.title}</span>
+            <span className="w-full line-clamp-2" title={data.title}>
+              {data.title}
+            </span>
           </div>
         );
       },
@@ -266,15 +273,47 @@ export const useColumns = ({
 
 function ActionsComponent({
   row,
+  refreshData,
 }: {
   row: Row<PartialCreatedBlogDocumentType>;
+  refreshData: () => void;
 }) {
   const [alertItem, setAlertItem] = React.useState(0);
   const [isPending, startTransition] = React.useTransition();
+  const appwriteClient = React.useMemo(() => new AppwriteClientService(), []);
   const data = row.original;
 
   function DangerActionFunction() {
-    toast.info("Action is in progress");
+    startTransition(() => {
+      if (alertItem === 1) {
+        toast.success(data.published ? "Unpublishing Blog" : "Publishing Blog");
+        appwriteClient.database
+          .updateDocument("production", "blogs", data.$id, {
+            published: !data.published,
+          })
+          .then(() => {
+            toast.success(
+              data.published ? "Unpublished Blog" : "Published Blog"
+            );
+            refreshData();
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
+      } else if (alertItem === 2) {
+        toast.success("Deleting Blog");
+        appwriteClient.database
+          .deleteDocument("production", "blogs", data.$id)
+          .then(() => {
+            toast.success("Deleted Blog");
+            refreshData();
+          })
+          .catch((error) => {
+            toast.error(error.message);
+          });
+      }
+      setAlertItem(0);
+    });
   }
 
   return (
@@ -305,7 +344,7 @@ function ActionsComponent({
             >
               Open Blog in New Tab
               <DropdownMenuShortcut>
-                <ExternalLink />
+                <ExternalLink className="h-4 w-4" />
               </DropdownMenuShortcut>
             </DropdownMenuItem>
             {/* Edit */}
@@ -313,11 +352,12 @@ function ActionsComponent({
               <Link href={`/blogs/${data.$id.toString()}`} passHref>
                 Edit
                 <DropdownMenuShortcut>
-                  <Pencil />
+                  <Pencil className="h-4 w-4" />
                 </DropdownMenuShortcut>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            {/* Danger Zone */}
             <DropdownMenuSub>
               <DropdownMenuSubTrigger className="text-red-600">
                 Danger Zone
@@ -331,7 +371,7 @@ function ActionsComponent({
                   >
                     {data.published ? "Unpublish" : "Publish"} Blog
                     <DropdownMenuShortcut>
-                      <Info />
+                      <Info className="h-4 w-4" />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
                   <DropdownMenuItem
@@ -341,7 +381,7 @@ function ActionsComponent({
                   >
                     Delete Blog
                     <DropdownMenuShortcut>
-                      <Trash />
+                      <Trash className="h-4 w-4" />
                     </DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>

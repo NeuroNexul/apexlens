@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Arif-Sardar-s-workspace-focbde.us-east-1.xata.sh/db/nuronexul",
+  "codegen": {
+    "output": "src/lib/xata.ts"
+  }
+}
