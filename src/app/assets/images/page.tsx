@@ -50,11 +50,15 @@ type QueryState = {
   };
 };
 
+export default function page({}: {}) {
+  return <ImageAssetsComponent />;
+}
+
 type Props = {
   className?: string;
 };
 
-export default function ImagePage({ className }: Props) {
+export function ImageAssetsComponent({ className }: Props) {
   // XATA ITERATOR
   const xataIterater = React.useRef<Page<
     ImagesRecord,
