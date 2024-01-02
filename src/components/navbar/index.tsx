@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import AvatarBtn from "./avatar";
 import Logo from "./logo";
 import { Dialog, DialogContent, DialogTrigger } from "@ui/dialog";
-import { ImageAssetsComponent } from "@/app/assets/images/page";
+import { ImageAssetsComponent } from "@/app/assets/images/image_assets_component";
 
 type Props = {
   children: React.ReactNode;
