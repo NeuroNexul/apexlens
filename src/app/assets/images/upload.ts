@@ -59,13 +59,14 @@ type UpdateResponseType = {
   id: string;
   data: CloudinaryResponse | null;
   progress: number;
+  error?: string;
 };
 
-export default function upload(
+export default function uploadImages(
   files: FileList,
   onUpdate: (
     data: UpdateResponseType[],
-    status: "idle" | "pending" | "success" | "error",
+    status: "idle" | "pending" | "success" | "error" | "partial-error",
     uploaded: number,
     toBeUploaded: number
   ) => void
@@ -74,7 +75,8 @@ export default function upload(
     return;
   }
 
-  let status: "idle" | "pending" | "success" | "error" = "pending";
+  let status: "idle" | "pending" | "success" | "error" | "partial-error" =
+    "pending";
   let toBeUploaded = files.length;
   let uploaded = 0;
   let data: UpdateResponseType[] = Array.from(files).map((file) => ({
@@ -105,8 +107,8 @@ export default function upload(
       onUpdate(data, status, uploaded, toBeUploaded);
     });
 
-    xhr.onreadystatechange = (e) => {
-      if (xhr.readyState === 4 && xhr.status === 200) {
+    xhr.onreadystatechange = async (e) => {
+      if (xhr.readyState === 4 && xhr.status < 400) {
         const response = JSON.parse(xhr.responseText);
         data = data.map((item) => {
           if (item.id === files[i].name) {
@@ -118,11 +120,23 @@ export default function upload(
         uploaded++;
 
         // Update XATA database
-        UpdateXATAImageDatabase(response);
+        await UpdateXATAImageDatabase(response);
 
         if (data.every((item) => item.progress === 100)) {
           status = "success";
-        } else {
+        }
+        onUpdate(data, status, uploaded, toBeUploaded);
+      } else if (xhr.readyState === 4 && xhr.status >= 400) {
+        data = data.map((item) => {
+          if (item.id === files[i].name) {
+            item.progress = 100;
+            item.error = xhr.responseText;
+          }
+          return item;
+        });
+        uploaded++;
+        status = "partial-error";
+        if (data.every((item) => item.progress === 100)) {
           status = "error";
         }
         onUpdate(data, status, uploaded, toBeUploaded);

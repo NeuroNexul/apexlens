@@ -20,6 +20,16 @@ export function stringifyNumberData(num: number) {
   return `${(num / 1000000000).toFixed(1)}B`;
 }
 
+export function stringifyBytes(bytes: number) {
+  if (bytes < 1024) return bytes.toString();
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)}KB`;
+  if (bytes < 1024 * 1024 * 1024)
+    return `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
+  if (bytes < 1024 * 1024 * 1024 * 1024)
+    return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)}GB`;
+  return `${(bytes / (1024 * 1024 * 1024 * 1024)).toFixed(1)}TB`;
+}
+
 export function merge(...objects: object[]) {
   return deepmerge.all(objects, { arrayMerge: (target, source) => source });
 }

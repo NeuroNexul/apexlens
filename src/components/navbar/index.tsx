@@ -3,13 +3,19 @@
 import { cn } from "@/lib/utils";
 import React from "react";
 import { Button } from "../ui/button";
-import { BellIcon, PanelLeftClose, PanelLeftOpen, Search } from "lucide-react";
-import { ScrollArea } from "../ui/scroll-area";
+import {
+  BellIcon,
+  ImageIcon,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Search,
+} from "lucide-react";
 import NavContent from "./nav-content";
 import { toast } from "sonner";
 import AvatarBtn from "./avatar";
-import ThemeToggleButton from "../ui/theme-toggle";
 import Logo from "./logo";
+import { Dialog, DialogContent, DialogTrigger } from "@ui/dialog";
+import ImagePage from "@/app/assets/images/page";
 
 type Props = {
   children: React.ReactNode;
@@ -73,6 +79,22 @@ export default function NavBar({ children }: Props) {
               </span>
             </Button>
           </div>
+
+          {/* Assets/Images */}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="icon"
+                className="overflow-hidden aspect-square flex-shrink-0"
+              >
+                <ImageIcon className={`h-[1.2em] w-[1.2em] rounded-none`} />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="w-full max-w-full h-full max-h-full bg-transparent">
+              <ImagePage className="absolute w-[calc(100%-8rem)] h-[calc(100%-8rem)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background border rounded-md overflow-hidden" />
+            </DialogContent>
+          </Dialog>
 
           {/* Notifications */}
           <Button

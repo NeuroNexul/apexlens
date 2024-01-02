@@ -20,6 +20,16 @@ const tables = [
       { name: "url", type: "string" },
       { name: "extension", type: "string" },
       { name: "filename", type: "string" },
+      { name: "alt", type: "string" },
+    ],
+    revLinks: [{ column: "image", table: "image-categories" }],
+  },
+  {
+    name: "image-categories",
+    columns: [
+      { name: "title", type: "string" },
+      { name: "image", type: "link", link: { table: "images" } },
+      { name: "slug", type: "string" },
     ],
   },
 ] as const;
@@ -30,17 +40,19 @@ export type InferredTypes = SchemaInference<SchemaTables>;
 export type Images = InferredTypes["images"];
 export type ImagesRecord = Images & XataRecord;
 
+export type ImageCategories = InferredTypes["image-categories"];
+export type ImageCategoriesRecord = ImageCategories & XataRecord;
+
 export type DatabaseSchema = {
   images: ImagesRecord;
+  "image-categories": ImageCategoriesRecord;
 };
 
 const DatabaseClient = buildClient();
 
-const defaultOptions: BaseClientOptions = {
+const defaultOptions = {
   databaseURL:
     "https://Arif-Sardar-s-workspace-focbde.us-east-1.xata.sh/db/nuronexul",
-  apiKey: process.env.NEXT_PUBLIC_XATA_API_KEY,
-  enableBrowser: true,
 };
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
@@ -54,6 +66,10 @@ let instance: XataClient | undefined = undefined;
 export const getXataClient = () => {
   if (instance) return instance;
 
-  instance = new XataClient();
+  instance = new XataClient({
+    enableBrowser: true,
+    apiKey: process.env.NEXT_PUBLIC_XATA_API_KEY,
+    branch: process.env.NEXT_PUBLIC_XATA_BRANCH,
+  });
   return instance;
 };

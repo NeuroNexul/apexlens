@@ -69,6 +69,7 @@ export const AuthProvider = ({
       }}
     >
       {loading ? <PageLoader /> : isUserLoggedIn ? children : <LoginPage />}
+      {/* {children} */}
     </AuthContext.Provider>
   );
 };
