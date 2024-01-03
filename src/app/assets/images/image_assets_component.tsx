@@ -163,7 +163,7 @@ export function ImageAssetsComponent({ className }: Props) {
                     <div
                       className={cn(
                         "relative z-0 aspect-square lg:aspect-video w-full", // Positioning, Size
-                        "rounded-md overflow-hidden", // Border
+                        "rounded-md overflow-hidden border", // Border
                         "cursor-pointer", // Cursor
                         "bg-muted" // Background
                       )}

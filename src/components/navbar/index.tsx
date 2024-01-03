@@ -92,7 +92,7 @@ export default function NavBar({ children }: Props) {
               </Button>
             </DialogTrigger>
             <DialogContent className="w-full max-w-full h-full max-h-full bg-transparent">
-              <ImageAssetsComponent className="absolute w-[calc(100%-8rem)] h-[calc(100%-8rem)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background border rounded-md overflow-hidden" />
+              <ImageAssetsComponent className="absolute w-[calc(100%-2rem)] max-w-4xl h-[calc(100%-4rem)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background border rounded-md overflow-hidden" />
             </DialogContent>
           </Dialog>
 

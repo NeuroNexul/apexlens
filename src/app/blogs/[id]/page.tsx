@@ -9,10 +9,11 @@ import MetaData from "./meta_data";
 import CodeEditor from "./editor";
 import SplitView from "./split_view";
 import Preview from "./preview";
-import { Loader2, Trash2, UploadCloud } from "lucide-react";
+import { Loader2, Trash2, UploadCloud, Wand2 } from "lucide-react";
 import AppwriteClientService from "@/appwrite/client";
 import { Models, Query } from "appwrite";
 import { toast } from "sonner";
+import prettier from "prettier/standalone";
 
 type Props = {
   params: {
@@ -92,6 +93,14 @@ export default function Page({ params: { id }, searchParams: { tab } }: Props) {
       e.preventDefault();
       save();
     }
+  }
+
+  async function formatCode() {
+    const newCode = await prettier.format(content || "", {
+      parser: "markdown",
+      plugins: [require("prettier/parser-markdown")],
+    });
+    setContent(newCode);
   }
 
   /**
@@ -181,6 +190,15 @@ export default function Page({ params: { id }, searchParams: { tab } }: Props) {
                 variant="outline"
                 className={tab_button_class}
                 size="sm"
+                onClick={formatCode}
+              >
+                <Wand2 size={16} />
+                Format
+              </Button>
+              <Button
+                variant="outline"
+                className={tab_button_class}
+                size="sm"
                 onClick={save}
               >
                 {isSaving ? (
@@ -199,10 +217,6 @@ export default function Page({ params: { id }, searchParams: { tab } }: Props) {
                 <Trash2 size={16} />
                 Delete Local Data
               </Button>
-              {/* <Button variant="outline" className={tab_button_class} size="sm">
-                <LayoutTemplate size={16} />
-                Preview
-              </Button> */}
             </div>
           </div>
         </ScrollArea>
@@ -212,7 +226,20 @@ export default function Page({ params: { id }, searchParams: { tab } }: Props) {
           <MetaData slug={id} data={data} setData={setData} />
         </TabsContent>
         <TabsContent value="editor" className="mt-0 h-full">
-          <CodeEditor slug={id} content={content} setContent={setContent} />
+          <CodeEditor
+            content={content}
+            setContent={(content) => {
+              localStorage.setItem(
+                `blog-${id}`,
+                JSON.stringify({
+                  ...data,
+                  content,
+                })
+              );
+
+              setContent(content);
+            }}
+          />
         </TabsContent>
         <TabsContent value="preview" className="mt-0 h-full">
           <Preview slug={id} content={content} />
@@ -221,7 +248,6 @@ export default function Page({ params: { id }, searchParams: { tab } }: Props) {
           <SplitView
             editor={
               <CodeEditor
-                slug={id}
                 content={content}
                 setContent={(content) => {
                   localStorage.setItem(

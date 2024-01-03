@@ -1,69 +1,83 @@
 "use client";
 
 import React from "react";
-import Editor, { Monaco } from "@monaco-editor/react";
-import PageLoader from "@/components/loaders/page_loader";
-import { editor } from "monaco-editor";
-import { defineTheme } from "./code_editor/theme";
-import registerMdxLanguage from "./code_editor/mdx-lang";
-// @ts-ignore
-// import monacoThemes from "monaco-themes/themes/themelist";
+import CodeMirror, { EditorView, ViewUpdate } from "@uiw/react-codemirror";
+import { loadLanguage } from "@uiw/codemirror-extensions-langs";
+import { color } from "@uiw/codemirror-extensions-color";
+import { githubDarkInit } from "@uiw/codemirror-theme-github";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type Props = {
-  slug: string;
   content: string;
   setContent: (content: string) => void;
 };
 
-export default function CodeEditor({ slug, content, setContent }: Props) {
-  const editorRef = React.useRef<any>(null);
-  // console.log("monacoThemes", monacoThemes);
-
-  function handleEditorWillMount(monaco: Monaco) {
-    console.log("Monaco editor mounting.");
-
-    defineTheme(monaco, "dark"); // Define the dark theme
-    // registerMdxLanguage(monaco); // Register the mdx language
-  }
-
-  function handleEditorDidMount(
-    editor: editor.IStandaloneCodeEditor,
-    monaco: Monaco
-  ) {
-    console.log("Monaco editor mounted.");
-    editorRef.current = editor;
-  }
+export default function CodeEditor({ content, setContent }: Props) {
+  const onChange = React.useCallback(
+    (value: string, viewUpdate: ViewUpdate) => {
+      setContent(value);
+    },
+    [setContent]
+  );
 
   return (
     <div className="w-full h-full">
-      <Editor
-        height="100%"
-        defaultLanguage="mdx"
-        defaultValue={content}
-        onChange={(value) => setContent(value || "")}
-        theme="slate-dark"
-        loading={<PageLoader />}
-        options={{
-          "semanticHighlighting.enabled": true,
-          minimap: { enabled: false },
-          mouseWheelZoom: true,
-          fontSize: 12,
-          wordWrap: "on",
-
-          // Automatic Layout
-          automaticLayout: true,
-          autoClosingBrackets: "beforeWhitespace",
-          autoClosingQuotes: "beforeWhitespace",
-          autoClosingComments: "beforeWhitespace",
-          autoIndent: "advanced",
-          bracketPairColorization: {
-            enabled: true,
-          },
-          smoothScrolling: true,
-        }}
-        onMount={handleEditorDidMount}
-        beforeMount={handleEditorWillMount}
-      />
+      <ScrollArea className="h-full" orientation="vertical">
+        <CodeMirror
+          value={content}
+          onChange={onChange}
+          theme={githubDarkInit({
+            settings: {
+              background: "#020817",
+              backgroundImage: "",
+              foreground: "#ffffff",
+              caret: "#ffffff",
+              selection: "#1e293b",
+              selectionMatch: "#1e293b",
+              gutterBackground: "#020817",
+              gutterForeground: "#94a3b8",
+              gutterBorder: "#dddddd",
+              gutterActiveForeground: "#ffffff",
+              lineHighlight: "#1e293b55",
+            },
+          })}
+          placeholder="Start writing your blog here..."
+          basicSetup={{
+            allowMultipleSelections: true,
+            autocompletion: true,
+            bracketMatching: true,
+            closeBrackets: true,
+            closeBracketsKeymap: true,
+            completionKeymap: true,
+            crosshairCursor: false,
+            defaultKeymap: true,
+            drawSelection: true,
+            dropCursor: true,
+            foldGutter: true,
+            foldKeymap: true,
+            highlightActiveLine: true,
+            highlightActiveLineGutter: true,
+            highlightSelectionMatches: true,
+            highlightSpecialChars: true,
+            history: true,
+            historyKeymap: true,
+            indentOnInput: true,
+            lineNumbers: true,
+            lintKeymap: true,
+            rectangularSelection: false,
+            searchKeymap: true,
+            syntaxHighlighting: true,
+            tabSize: 2,
+          }}
+          indentWithTab
+          lang="markdown"
+          extensions={[
+            EditorView.lineWrapping,
+            loadLanguage("markdown")!,
+            color,
+          ]}
+        />
+      </ScrollArea>
     </div>
   );
 }

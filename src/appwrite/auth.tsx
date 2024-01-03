@@ -49,8 +49,14 @@ export const AuthProvider = ({
 
     AppwriteClient.getSession()
       .then((res) => {
-        setCurrentAccount(res);
-        setLoading(false);
+        if (res.labels?.includes("admin")) {
+          setCurrentAccount(res);
+          setLoading(false);
+        } else {
+          toast.error("You are not an admin");
+          setCurrentAccount(null);
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.error(err);

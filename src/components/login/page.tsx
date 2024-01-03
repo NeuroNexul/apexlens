@@ -24,6 +24,7 @@ import Image from "next/image";
 
 import CredentialImage from "@assets/credential.svg";
 import { getCookie } from "@/lib/cookie";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -60,7 +61,11 @@ export default function LoginPage({}: Props) {
     );
 
     const account = await AppwriteClient.getSession();
-    auth.setAccount(account);
+    if (account.labels?.includes("admin")) {
+      auth.setAccount(account);
+    } else {
+      toast.error("You are not an admin");
+    }
   });
 
   return (
