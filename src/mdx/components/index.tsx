@@ -1,5 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MDXProvider } from "@mdx-js/react";
+import LiveReact from "./live-react";
+import SyntaxHighlighter from "./syntax_highlighter";
 
 const components: React.ComponentProps<typeof MDXProvider>["components"] = {
   h1: (props) => (
@@ -58,18 +60,13 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
       </figure>
     );
   },
-  inlineCode: (props) => (
+  code: (props) => (
     <code
-      className="px-1 py-0.5 bg-muted/50 text-primary rounded-sm"
+      className="px-1 py-0.5 bg-muted/70 text-primary rounded-sm"
       {...props}
     />
   ),
-  pre: (props) => (
-    <pre
-      className="p-2 bg-muted text-muted-foreground rounded-md mt-2 mb-2"
-      {...props}
-    />
-  ),
+  pre: SyntaxHighlighter,
   YouTube: ({ id, title, ...props }) => (
     <div className="w-full h-auto max-w-[40rem] mx-auto rounded-lg overflow-hidden mt-4 mb-2">
       <iframe
@@ -80,6 +77,7 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
       />
     </div>
   ),
+  LiveReact: LiveReact,
 };
 
 export default components;

@@ -2,48 +2,19 @@
 
 import React from "react";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
-import { CompileMDXResult, compileMDX } from "next-mdx-remote/rsc";
-import { remarkCodeHike } from "@code-hike/mdx";
-import remarkGfm from "remark-gfm";
-import { CH } from "@code-hike/mdx/components";
+import { CompileMDXResult } from "next-mdx-remote/rsc";
 import { cn } from "@/lib/utils";
-import components from "./components";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import parseMDX from "@/mdx/compile";
 
 async function serializeContent(content: string): Promise<{
   res: CompileMDXResult<Record<string, unknown>> | null;
   error?: Error;
 }> {
   try {
-    const res = await compileMDX({
+    const res = await parseMDX({
       source: content,
-      options: {
-        mdxOptions: {
-          development: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
-          remarkPlugins: [
-            // [
-            //   remarkCodeHike,
-            //   {
-            //     autoImport: false,
-            //     theme: "dark-plus",
-            //   },
-            // ],
-            remarkGfm,
-          ],
-          rehypePlugins: [],
-          baseUrl: "/",
-          useDynamicImport: true,
-        },
-        scope: {
-          // CH,
-        },
-        parseFrontmatter: false,
-      },
-      components: {
-        ...components,
-        // CH,
-      },
     });
 
     return { res };

@@ -134,3 +134,133 @@
     }
   }
 }
+
+// Prism Theme
+.mdx {
+  code[class*="language-"],
+  pre[class*="language-"] {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    direction: ltr;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    line-height: 1.5;
+    tab-size: 2;
+    hyphens: none;
+  }
+
+  /* Code blocks */
+  pre[class*="language-"] {
+    font-size: 0.9rem;
+    font-family: "Fira Code", "Fira Mono", Menlo, Consolas, "DejaVu Sans Mono",
+      monospace;
+    padding: 1em;
+    margin: 0.5em 0;
+    overflow: auto;
+    border-radius: 0.3em;
+  }
+
+  /* Inline code */
+  :not(pre) > code[class*="language-"] {
+    font-size: 1rem;
+    background-color: hsl(var(--muted));
+    padding: 0.2em 0.3em;
+    border-radius: 0.3em;
+    white-space: normal;
+  }
+
+  @media (width <= 700px) {
+    :not(pre) > code[class*="language-"] {
+      font-size: 0.9rem;
+    }
+  }
+
+  .token.comment,
+  .token.prolog,
+  .token.cdata {
+    color: #637777;
+    font-style: italic;
+  }
+
+  .token.punctuation {
+    color: #c792ea;
+  }
+
+  .namespace {
+    color: #b2ccd6;
+  }
+
+  .token.deleted {
+    color: #ef53508f;
+    font-style: italic;
+  }
+
+  .token.symbol,
+  .token.property {
+    color: #80cbc4;
+  }
+
+  .token.tag,
+  .token.operator,
+  .token.keyword {
+    color: #7fdbca;
+  }
+
+  .token.boolean {
+    color: #ff5874;
+  }
+
+  .token.number {
+    color: #f78c6c;
+  }
+
+  .token.constant,
+  .token.function,
+  .token.builtin,
+  .token.char {
+    color: #82aaff;
+  }
+
+  .token.selector,
+  .token.doctype {
+    color: #c792ea;
+    font-style: italic;
+  }
+
+  .token.attr-name,
+  .token.inserted {
+    color: #addb67;
+    font-style: italic;
+  }
+
+  .token.string,
+  .token.url,
+  .token.entity,
+  .language-css .token.string,
+  .style .token.string {
+    color: #addb67;
+  }
+
+  .token.class-name,
+  .token.atrule,
+  .token.attr-value {
+    color: #ffcb8b;
+  }
+
+  .token.regex,
+  .token.important,
+  .token.variable {
+    color: #d6deeb;
+  }
+
+  .token.important,
+  .token.bold {
+    font-weight: 700;
+  }
+
+  .token.italic {
+    font-style: italic;
+  }
+}
