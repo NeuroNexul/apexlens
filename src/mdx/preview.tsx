@@ -50,7 +50,7 @@ export default function Preview({ slug, content }: Props) {
   return (
     <div className="w-full h-full bg-background">
       <ScrollArea className="w-full h-full scroll-block" orientation="vertical">
-        <div className={cn("mdx w-full p-2")}>
+        <div className={cn("mdx container w-full p-2")}>
           <ErrorBoundary errorComponent={ErrorComp}>
             {mdxNode ? mdxNode?.content : <ErrorComp error={error} />}
           </ErrorBoundary>

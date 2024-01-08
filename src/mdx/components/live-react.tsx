@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -6,97 +8,30 @@ import {
 import React from "react";
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 type Props = {
-  code: string;
+  defaultSize?: number;
   css?: string;
+  children: React.ReactNode;
 };
 
-const prismStyles = [
-  {
-    types: ["tag", "name", "quote"],
-    style: {
-      color: "#7ee787",
-    },
-  },
-  {
-    types: ["comment", "punctuation"],
-    style: {
-      color: "#8b949e",
-    },
-  },
-  {
-    types: ["class-name", "property-name"],
-    style: {
-      color: "#d2a8ff",
-    },
-  },
-  {
-    types: ["variable", "attr-name", "operator", "numbers"],
-    style: {
-      color: "#79c0ff",
-    },
-  },
-  {
-    types: ["keyword", "type", "operator", "attr-equals"],
-    style: {
-      color: "#ff7b72",
-    },
-  },
-  {
-    types: ["string", "meta", "regexp", "attr-value"],
-    style: {
-      color: "#a5d6ff",
-    },
-  },
-  {
-    types: ["headings", "strong"],
-    style: {
-      color: "#d2a8ff",
-      fontWeight: "bold",
-    },
-  },
-  {
-    types: ["emphasis"],
-    style: {
-      color: "#d2a8ff",
-      fontStyle: "italic",
-    },
-  },
-  {
-    types: ["deleted"],
-    style: {
-      color: "#ffdcd7",
-      backgroundColor: "ffeef0",
-    },
-  },
-  {
-    types: ["atom", "boolean"],
-    style: {
-      color: "#ffab70",
-    },
-  },
-  {
-    types: ["link"],
-    style: {
-      textDecorationLine: "underline",
-    },
-  },
-  {
-    types: ["strike-through"],
-    style: {
-      textDecorationLine: "line-through",
-    },
-  },
-  {
-    types: ["invalid"],
-    style: {
-      color: "#f97583",
-    },
-  },
-];
+export default function LiveReact({ defaultSize, children }: Props) {
+  const rawCode = React.isValidElement(children)
+    ? (children.props as any).children.props.children.trim()
+    : "";
 
-export default function LiveReact({ code }: Props) {
+  const [code, setCodde] = React.useState(rawCode);
+
+  // const format = () => {
+  //   const formatted = prettier
+  //     .format(code, {
+  //       parser: "babel",
+  //       plugins: [require("prettier/parser-babel")],
+  //     })
+  //     .then((formatted) => setCodde(formatted));
+  // };
+
   return (
     <div className="border rounded-md overflow-hidden h-auto mt-2 mb-4">
       {/* Header */}
@@ -104,6 +39,26 @@ export default function LiveReact({ code }: Props) {
         <h2 className="text-sm font-bold text-muted-foreground p-2">
           React Playground
         </h2>
+        <div className="flex-grow"></div>
+        {/* <div className="h-full w-auto flex flex-row items-center gap-2 px-2">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="p-1 h-full w-auto aspect-square text-muted-foreground hover:text-primary transition-colors duration-200 ease-in-out"
+            title="Format code"
+            onClick={format}
+          >
+            <Wand2 className="w-4 h-4" />
+          </Button>
+          <Button
+            size="icon"
+            variant="ghost"
+            className="p-1 h-full w-auto aspect-square text-muted-foreground hover:text-primary transition-colors duration-200 ease-in-out"
+            title="Reset code"
+          >
+            <SkipBack className="w-4 h-4" />
+          </Button>
+        </div> */}
       </div>
       <LiveProvider
         code={code}
@@ -125,11 +80,15 @@ export default function LiveReact({ code }: Props) {
         }}
       >
         <ResizablePanelGroup direction="horizontal" className="max-h-96">
-          <ResizablePanel>
-            <LiveEditor />
+          <ResizablePanel defaultSize={defaultSize || 50}>
+            {/* Editor */}
+            <ScrollArea className="h-full p-2" orientation="both">
+              <LiveEditor code={code} onChange={(code) => setCodde(code)} />
+            </ScrollArea>
           </ResizablePanel>
           <ResizableHandle withHandle />
           <ResizablePanel>
+            {/* Preview */}
             <ScrollArea className="h-full p-2" orientation="both">
               <LiveError />
               <LivePreview />

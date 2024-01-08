@@ -47,6 +47,9 @@ export default function MetaData({ slug, data, setData }: Props) {
                 }
                 className="mt-1"
               />
+              <p className="text-right text-xs pt-1 text-muted-foreground">
+                Length {data.title.length}/60 characters
+              </p>
             </div>
 
             {/* Slug */}
@@ -77,6 +80,9 @@ export default function MetaData({ slug, data, setData }: Props) {
                 rows={6}
                 className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 mt-1 text-sm shadow-sm placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
               />
+              <p className="text-right text-xs pt-1 text-muted-foreground">
+                Length {data.description.length}/150 characters
+              </p>
             </div>
 
             {/* Is Published */}

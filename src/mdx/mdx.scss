@@ -33,6 +33,32 @@
   margin: 0 auto;
   color: var(--foreground-color);
 
+  // Anchor Styles
+  a {
+    position: relative;
+    padding: 0.1em;
+    color: #7fdbca;
+    text-decoration: none;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #7fdbca;
+      opacity: 0.5;
+      transition: width 0.3s;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+
   // Lists Styles
   ul,
   ol {

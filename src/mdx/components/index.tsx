@@ -22,8 +22,9 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
   h6: (props) => <h6 className="text-base font-bold mt-2 mb-4" {...props} />,
   p: (props) => <p className="text-base mt-2 mb-2" {...props} />,
   a: (props) => <a className="text-primary" {...props} />,
-  ul: (props) => <ul className="list-inside" {...props} />,
-  ol: (props) => <ol className="list-inside" {...props} />,
+  u: (props) => <u className="text-primary no-underline" {...props} />,
+  ul: (props) => <ul className="list-outside" {...props} />,
+  ol: (props) => <ol className="list-outside" {...props} />,
   li: (props) => <li className="text-base" {...props} />,
   blockquote: (props) => (
     <blockquote className="border-l-4 border-primary pl-4" {...props} />

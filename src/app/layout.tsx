@@ -9,7 +9,7 @@ import type { Models } from "appwrite";
 import AppwriteServerService from "@/appwrite/server";
 
 import "./globals.css";
-import "./mdx.scss";
+import "@/mdx/mdx.scss";
 
 const interFont = Inter({ subsets: ["latin"], variable: "--font-sans" });
 const rubikFont = Rubik_Vinyl({

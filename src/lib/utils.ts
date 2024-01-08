@@ -8,6 +8,8 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import deepmerge from "deepmerge";
+import prettier from "prettier/standalone";
+import { BuiltInParserName } from "prettier";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -59,3 +61,30 @@ export function randomString(size: number) {
   const bytes = crypto.getRandomValues(new Uint8Array(size));
   return Array.from(bytes).reduce(r, "");
 }
+
+/**
+ * Available languages:
+ * js, jsx, ts, tsx, css, scss, less, html, json, md, markdown, mdx, yaml, yml
+ */
+// export async function formatCode(
+//   code: string = "",
+//   lang: BuiltInParserName = "babel"
+// ) {
+//   return await prettier.format(code, {
+//     parser: lang,
+//     plugins: [
+//       require("prettier/parser-angular"),
+//       require("prettier/parser-babel"),
+//       require("prettier/parser-espree"),
+//       require("prettier/parser-flow"),
+//       require("prettier/parser-glimmer"),
+//       require("prettier/parser-graphql"),
+//       require("prettier/parser-html"),
+//       require("prettier/parser-markdown"),
+//       require("prettier/parser-meriyah"),
+//       require("prettier/parser-postcss"),
+//       require("prettier/parser-typescript"),
+//       require("prettier/parser-yaml"),
+//     ],
+//   });
+// }

@@ -8,7 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import MetaData from "./meta_data";
 import CodeEditor from "./editor";
 import SplitView from "./split_view";
-import Preview from "./preview";
+import Preview from "../../../mdx/preview";
 import { Loader2, Trash2, UploadCloud, Wand2 } from "lucide-react";
 import AppwriteClientService from "@/appwrite/client";
 import { Models, Query } from "appwrite";
