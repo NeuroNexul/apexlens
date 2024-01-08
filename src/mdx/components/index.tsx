@@ -68,7 +68,7 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
     />
   ),
   pre: SyntaxHighlighter,
-  YouTube: ({ id, title, ...props }) => (
+  Youtube: ({ id, title, ...props }) => (
     <div className="w-full h-auto max-w-[40rem] mx-auto rounded-lg overflow-hidden mt-4 mb-2">
       <iframe
         className="w-full h-[calc(40rem/1.777)]"

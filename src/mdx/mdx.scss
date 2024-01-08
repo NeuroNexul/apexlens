@@ -59,6 +59,19 @@
     }
   }
 
+  // MDX Embed
+  .mdx-embed {
+    position: relative;
+    width: 100%;
+    height: auto;
+
+    iframe {
+      width: auto;
+      height: auto;
+      border-radius: 12px;
+    }
+  }
+
   // Lists Styles
   ul,
   ol {

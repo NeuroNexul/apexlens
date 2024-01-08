@@ -4,6 +4,7 @@ import {
   compileMDX,
 } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import * as embeds from "mdx-embed";
 import components from "./components";
 
 export interface CompileMDXOptions {
@@ -21,13 +22,14 @@ export default async function parseMDX({
         remarkPlugins: [remarkGfm],
         rehypePlugins: [],
         baseUrl: "/",
-        useDynamicImport: true
+        useDynamicImport: true,
       },
       scope: {},
       parseFrontmatter: false,
     },
     components: {
       ...components,
+      ...embeds,
     },
   });
 
