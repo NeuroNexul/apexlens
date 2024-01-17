@@ -3,6 +3,7 @@
 import React from "react";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import { CompileMDXResult } from "next-mdx-remote/rsc";
+import Twemoji from "react-twemoji";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
@@ -52,7 +53,13 @@ export default function Preview({ slug, content }: Props) {
       <ScrollArea className="w-full h-full scroll-block" orientation="vertical">
         <div className={cn("mdx container w-full p-2")}>
           <ErrorBoundary errorComponent={ErrorComp}>
-            {mdxNode ? mdxNode?.content : <ErrorComp error={error} />}
+            {mdxNode ? (
+              <Twemoji options={{ className: "twemoji" }}>
+                {mdxNode?.content}
+              </Twemoji>
+            ) : (
+              <ErrorComp error={error} />
+            )}
           </ErrorBoundary>
         </div>
       </ScrollArea>

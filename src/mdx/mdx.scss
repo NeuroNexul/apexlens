@@ -40,23 +40,31 @@
     color: #31e5c4;
     text-decoration: none;
 
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #31e5c4;
-      opacity: 0.5;
-      transition: width 0.3s;
-    }
+    // &::after {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   width: 0;
+    //   height: 2px;
+    //   background: #31e5c4;
+    //   opacity: 0.5;
+    //   transition: width 0.3s;
+    // }
 
-    &:hover {
-      &::after {
-        width: 100%;
-      }
-    }
+    // &:hover {
+    //   &::after {
+    //     width: 100%;
+    //   }
+    // }
+  }
+
+  img.twemoji {
+    display: inline-block;
+    height: 1.3em;
+    width: 1.3em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.3em;
   }
 
   // MDX Embed
@@ -149,6 +157,12 @@
       background-repeat: no-repeat;
       background-position: center;
       background-size: contain;
+    }
+
+    h1,
+    h2 {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
     }
   }
 

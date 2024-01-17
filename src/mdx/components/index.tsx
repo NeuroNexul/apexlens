@@ -6,6 +6,7 @@ import { cn, slugify } from "@/lib/utils";
 import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
 import React from "react";
+import { toast } from "sonner";
 
 const components: React.ComponentProps<typeof MDXProvider>["components"] = {
   h1: ({ children, ...props }) => (
@@ -36,22 +37,16 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
     </h2>
   ),
   h3: (props) => (
-    <h3
-      className="text-2xl font-bold font-space_grotesk mt-2 mb-4"
-      {...props}
-    />
+    <h3 className="text-2xl font-bold font-space_grotesk mb-2" {...props} />
   ),
   h4: (props) => (
-    <h4 className="text-xl font-bold font-space_grotesk mt-2 mb-4" {...props} />
+    <h4 className="text-xl font-bold font-space_grotesk" {...props} />
   ),
   h5: (props) => (
-    <h5 className="text-lg font-bold font-space_grotesk mt-2 mb-4" {...props} />
+    <h5 className="text-lg font-bold font-space_grotesk" {...props} />
   ),
   h6: (props) => (
-    <h6
-      className="text-base font-bold font-space_grotesk mt-2 mb-4"
-      {...props}
-    />
+    <h6 className="text-base font-bold font-space_grotesk" {...props} />
   ),
   p: (props) => <p className="text-base mt-2 mb-2" {...props} />,
   a: (props) => <a className="text-primary" {...props} />,
@@ -70,7 +65,9 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
       </ScrollArea>
     </figure>
   ),
-  thead: (props) => <thead className="bg-muted/40" {...props} />,
+  thead: (props) => (
+    <thead className="bg-muted/40 font-space_grotesk" {...props} />
+  ),
   tbody: (props) => <tbody className="bg-background" {...props} />,
   th: (props) => (
     <th className="p-2 font-bold text-center border-r" {...props} />
@@ -110,8 +107,17 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
               {text}
               {hexColors[index] && (
                 <span
-                  className="inline-block w-3 h-3 rounded-sm mr-1 align-middle"
+                  className="inline-block w-3 h-3 rounded-sm border border-primary/50 mr-1 align-middle cursor-pointer"
                   style={{ backgroundColor: hexColors[index] }}
+                  title={hexColors[index]}
+                  onClick={() => {
+                    navigator.clipboard.writeText(hexColors[index] || "");
+                    toast.success("Copied to clipboard!", {
+                      description: hexColors[index] || "",
+                      descriptionClassName:
+                        "text-primary w-full px-2 py-1 rounded-md bg-muted/70",
+                    });
+                  }}
                 />
               )}
               {hexColors[index] || ""}

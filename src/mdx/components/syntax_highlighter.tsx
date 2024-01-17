@@ -29,7 +29,7 @@ export default function SyntaxHighlighter(params: Props) {
     <div className="bg-background border rounded-md overflow-hidden">
       <div className="bg-muted/40 flex flex-row items-center justify-between">
         <div className="flex flex-row items-center">
-          <span className="text-sm font-normal text-muted-foreground p-2">
+          <span className="text-sm font-medium tracking-widest font-space_grotesk text-muted-foreground p-2">
             {language.toUpperCase()}
           </span>
           {props.file && (
@@ -81,9 +81,52 @@ export default function SyntaxHighlighter(params: Props) {
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   {/* <span>{i + 1}</span> */}
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
-                  ))}
+                  {line.map((token, key) => {
+                    const { children, ...props } = getTokenProps({ token });
+                    // Find Colors
+                    const hexColors = children.match(/#[0-9a-f]{3,6}/gi);
+                    const otherTexts = children.split(/#[0-9a-f]{3,6}/gi);
+
+                    if (
+                      hexColors &&
+                      otherTexts &&
+                      hexColors.length + 1 === otherTexts.length
+                    ) {
+                      return (
+                        <span key={key} {...props}>
+                          {otherTexts.map((text, index) => (
+                            <React.Fragment key={index}>
+                              {text}
+                              {hexColors[index] && (
+                                <span
+                                  className="inline-block w-3 h-3 rounded-sm border border-primary/50 mr-1 align-middle cursor-pointer"
+                                  style={{ backgroundColor: hexColors[index] }}
+                                  title={hexColors[index]}
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(
+                                      hexColors[index] || ""
+                                    );
+                                    toast.success("Copied to clipboard!", {
+                                      description: hexColors[index] || "",
+                                      descriptionClassName:
+                                        "text-primary w-full px-2 py-1 rounded-md bg-muted/70",
+                                    });
+                                  }}
+                                />
+                              )}
+                              {hexColors[index] || ""}
+                            </React.Fragment>
+                          ))}
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <span key={key} {...props}>
+                        {children}
+                      </span>
+                    );
+                  })}
                 </div>
               ))}
             </pre>

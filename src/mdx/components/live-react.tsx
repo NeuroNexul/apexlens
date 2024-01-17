@@ -82,7 +82,7 @@ export default function LiveReact({ defaultSize, children }: Props) {
         <ResizablePanelGroup direction="horizontal" className="max-h-96">
           <ResizablePanel defaultSize={defaultSize || 50}>
             {/* Editor */}
-            <ScrollArea className="h-full p-2" orientation="both">
+            <ScrollArea className="h-full p-1" orientation="both">
               <LiveEditor code={code} onChange={(code) => setCodde(code)} />
             </ScrollArea>
           </ResizablePanel>
