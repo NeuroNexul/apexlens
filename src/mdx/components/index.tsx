@@ -2,24 +2,57 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { MDXProvider } from "@mdx-js/react";
 import LiveReact from "./live-react";
 import SyntaxHighlighter from "./syntax_highlighter";
+import { cn, slugify } from "@/lib/utils";
+import Link from "next/link";
+import { Link as LinkIcon } from "lucide-react";
+import React from "react";
 
 const components: React.ComponentProps<typeof MDXProvider>["components"] = {
-  h1: (props) => (
+  h1: ({ children, ...props }) => (
     <h1
-      className="text-4xl font-bold mt-2 mb-4 border-b-[3px] pb-2"
+      className="text-4xl font-bold font-space_grotesk my-4 border-b-[3px] pb-1 pt-[0.3rem]"
+      id={slugify((children || "").toString())}
       {...props}
-    />
+    >
+      {children}
+    </h1>
   ),
-  h2: (props) => (
+  h2: ({ children, ...props }) => (
     <h2
-      className="text-3xl font-bold mt-2 mb-4 border-b-[3px] pb-2"
+      className={cn(
+        "text-3xl font-bold font-space_grotesk my-4 border-b-[3px] pb-1 pt-[0.3rem]", // Text
+        "w-full flex flex-row justify-normal items-start gap-3" // Flex
+      )}
+      id={slugify((children || "").toString())}
+      {...props}
+    >
+      <Link
+        href={`#${slugify((children || "").toString())}`}
+        className="after:hidden !p-0"
+      >
+        <LinkIcon className="w-5 h-9 text-[#31e5c4] cursor-pointer hover:drop-shadow-[0_0_5px_#31e5c4]" />
+      </Link>
+      <span>{children}</span>
+    </h2>
+  ),
+  h3: (props) => (
+    <h3
+      className="text-2xl font-bold font-space_grotesk mt-2 mb-4"
       {...props}
     />
   ),
-  h3: (props) => <h3 className="text-2xl font-bold mt-2 mb-4" {...props} />,
-  h4: (props) => <h4 className="text-xl font-bold mt-2 mb-4" {...props} />,
-  h5: (props) => <h5 className="text-lg font-bold mt-2 mb-4" {...props} />,
-  h6: (props) => <h6 className="text-base font-bold mt-2 mb-4" {...props} />,
+  h4: (props) => (
+    <h4 className="text-xl font-bold font-space_grotesk mt-2 mb-4" {...props} />
+  ),
+  h5: (props) => (
+    <h5 className="text-lg font-bold font-space_grotesk mt-2 mb-4" {...props} />
+  ),
+  h6: (props) => (
+    <h6
+      className="text-base font-bold font-space_grotesk mt-2 mb-4"
+      {...props}
+    />
+  ),
   p: (props) => <p className="text-base mt-2 mb-2" {...props} />,
   a: (props) => <a className="text-primary" {...props} />,
   u: (props) => <u className="text-primary no-underline" {...props} />,
@@ -61,12 +94,42 @@ const components: React.ComponentProps<typeof MDXProvider>["components"] = {
       </figure>
     );
   },
-  code: (props) => (
-    <code
-      className="px-1 py-0.5 bg-muted/70 text-primary rounded-sm"
-      {...props}
-    />
-  ),
+  code: ({ children, ...props }) => {
+    // Find Colors
+    const hexColors = children?.toString().match(/#[0-9a-f]{3,6}/gi);
+    const otherTexts = children?.toString().split(/#[0-9a-f]{3,6}/gi);
+
+    if (hexColors && otherTexts && hexColors.length + 1 === otherTexts.length) {
+      return (
+        <code
+          className="px-1 py-0.5 bg-muted/70 text-primary rounded-sm"
+          {...props}
+        >
+          {otherTexts.map((text, index) => (
+            <React.Fragment key={index}>
+              {text}
+              {hexColors[index] && (
+                <span
+                  className="inline-block w-3 h-3 rounded-sm mr-1 align-middle"
+                  style={{ backgroundColor: hexColors[index] }}
+                />
+              )}
+              {hexColors[index] || ""}
+            </React.Fragment>
+          ))}
+        </code>
+      );
+    }
+
+    return (
+      <code
+        className="px-1 py-0.5 bg-muted/70 text-primary rounded-sm"
+        {...props}
+      >
+        {children}
+      </code>
+    );
+  },
   pre: SyntaxHighlighter,
   Youtube: ({ id, title, ...props }) => (
     <div className="w-full h-auto max-w-[40rem] mx-auto rounded-lg overflow-hidden mt-4 mb-2">

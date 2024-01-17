@@ -80,6 +80,7 @@ module.exports = {
           "var(--font-noto-serif-georgian)",
           ...fontFamily.serif,
         ],
+        space_grotesk: ["var(--font-space-grotesk)", ...fontFamily.sans],
       },
       height: {},
     },

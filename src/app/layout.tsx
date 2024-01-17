@@ -1,6 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { cookies } from "next/headers";
-import { Inter, Rubik_Vinyl, Noto_Serif_Georgian } from "next/font/google";
+import {
+  Inter,
+  Rubik_Vinyl,
+  Noto_Serif_Georgian,
+  Space_Grotesk,
+} from "next/font/google";
 import { cn } from "@/lib/utils";
 import NavBar from "@/components/navbar";
 import { Toaster } from "@/components/ui/sonner";
@@ -25,6 +30,13 @@ const notoSerifGeorgianFont = Noto_Serif_Georgian({
   preload: true,
   subsets: ["latin"],
   variable: "--font-noto-serif-georgian",
+});
+const spaceGroteskFont = Space_Grotesk({
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -68,7 +80,7 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const theme = cookieStore.get("theme");
 
-  const AppwriteServer = new AppwriteServerService();
+  // const AppwriteServer = new AppwriteServerService();
 
   let currentAccount: Models.User<Models.Preferences> | null = null;
   // await AppwriteServer.getServerSession();
@@ -88,7 +100,8 @@ export default async function RootLayout({
           interFont.className,
           interFont.variable,
           rubikFont.variable,
-          notoSerifGeorgianFont.variable
+          notoSerifGeorgianFont.variable,
+          spaceGroteskFont.variable
         )}
       >
         <AuthProvider defaultAccount={currentAccount}>
